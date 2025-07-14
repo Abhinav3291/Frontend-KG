@@ -37,7 +37,7 @@ const OpeningStorySection = () => {
         transition={{ duration: 0.6 }}
       >
         <div className="opening-story-text">
-          <h2>Why This Course?</h2>
+          <h2>Founder's Voice</h2>
           <p>Struggling to keep up with the fast-moving world of web development? I was too, until I discovered a step-by-step approach that actually works. This course is designed to take you from beginner to job-ready, with practical skills you can use immediately.</p>
         </div>
         <div className="video-container">

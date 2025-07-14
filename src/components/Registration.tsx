@@ -38,27 +38,27 @@ const Registration = () => {
 
   const validateForm = (): boolean => {
     const newErrors: Partial<FormData> = {};
-    
+
     if (!formData.name.trim()) {
       newErrors.name = "Name is required";
     }
-    
+
     if (!formData.email) {
       newErrors.email = "Email is required";
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = "Email is invalid";
     }
-    
+
     if (!formData.phone) {
       newErrors.phone = "Phone number is required";
     } else if (!/^[0-9]{10}$/.test(formData.phone)) {
       newErrors.phone = "Please enter a valid 10-digit phone number";
     }
-    
+
     if (!formData.address.trim()) {
       newErrors.address = "Address is required";
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -69,7 +69,7 @@ const Registration = () => {
       ...prev,
       [name]: value
     }));
-    
+
     // Clear error when user starts typing
     if (errors[name as keyof FormData]) {
       setErrors(prev => ({
@@ -81,7 +81,7 @@ const Registration = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       setSnackbar({
         open: true,
@@ -92,7 +92,7 @@ const Registration = () => {
     }
 
     setIsSubmitting(true);
-    
+
     try {
       await authAPI.register({
         name: formData.name,
@@ -102,7 +102,7 @@ const Registration = () => {
         // Include additional info in the message
         message: `Address: ${formData.address}\n\nComments: ${formData.comment || 'No comments'}`
       });
-      
+
       // Reset form on success
       setFormData({
         name: "",
@@ -112,7 +112,7 @@ const Registration = () => {
         comment: "",
         course: "Banking and Finance Course",
       });
-      
+
       setSnackbar({
         open: true,
         message: "Registration successful! We'll contact you soon.",
@@ -129,7 +129,7 @@ const Registration = () => {
       setIsSubmitting(false);
     }
   };
-  
+
   const handleCloseSnackbar = () => {
     setSnackbar(prev => ({ ...prev, open: false }));
   };
@@ -217,7 +217,7 @@ const Registration = () => {
               <p className="mt-1 text-sm text-red-500">{errors.address}</p>
             )}
           </div>
-          
+
           <div className="mb-4">
             <select
               name="course"
@@ -226,9 +226,7 @@ const Registration = () => {
               className="w-full px-4 py-2 bg-gray-100 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-700"
             >
               <option value="Banking and Finance Course">Banking and Finance Course</option>
-              <option value="Investment Banking Course">Investment Banking Course</option>
-              <option value="Financial Markets Course">Financial Markets Course</option>
-              <option value="Wealth Management Course">Wealth Management Course</option>
+
             </select>
           </div>
 
@@ -244,9 +242,8 @@ const Registration = () => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className={`w-full py-2 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded transition flex justify-center items-center ${
-              isSubmitting ? 'opacity-75 cursor-not-allowed' : ''
-            }`}
+            className={`w-full py-2 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded transition flex justify-center items-center ${isSubmitting ? 'opacity-75 cursor-not-allowed' : ''
+              }`}
           >
             {isSubmitting ? (
               <>
@@ -259,7 +256,7 @@ const Registration = () => {
           </button>
         </form>
       </div>
-      
+
       <Snackbar
         open={snackbar.open}
         autoHideDuration={6000}

@@ -66,6 +66,7 @@ const Partners = () => {
   return (
     <div className="relative overflow-hidden bg-white py-4">
       <div className="w-full overflow-hidden">
+        <h2 className="text-2xl font-bold text-center mb-4">Till date our students placed in following organisations</h2>
         <div className="flex gap-9 animate-slide">
           {[...partners, ...partners].map((partner, idx) => (
             <div key={idx} className="flex-shrink-0 w-48 h-24 flex items-center justify-center">

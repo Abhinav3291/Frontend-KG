@@ -13,12 +13,8 @@ import InstructorSection from '../components/InstructorSection';
 const CourseSalesPage = () => {
   return (
     <div className="course-sales-page">
-
-      <OpeningStorySection />
-
-
-
       <TestimonialsSection />
+      <OpeningStorySection />
       <InstructorSection />
 
 

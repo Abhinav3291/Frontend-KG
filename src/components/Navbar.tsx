@@ -5,20 +5,21 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="bg-white shadow-md">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+    <header className="bg-black text-white shadow-md">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-4">
-            <div className="relative">
+            <div className="relative -ml-9">
               <img
                 src="/photo_2025-07-04_23-04-32.jpg"
                 alt="KG Training Logo"
-                className="w-10 h-10 sm:w-12 sm:h-12 object-cover border-2 shadow-lg hover:shadow-xl transition-shadow duration-300"
+                className="w-19 h-16 object-cover"
               />
-              <div className="absolute -right-1 -bottom-1 w-3 h-3  border-2 border-white"></div>
+
             </div>
-            <div className="text-xl sm:text-2xl font-bold text-gray-800 flex items-center">
-              <span className="text-black-600">KG Training & Placements</span>
+            <div className="text-xl sm:text-2xl font-bold flex items-center">
+              <span className="text-white text-2xl">KG Training & Placements </span>
+              <span className="font-style: italic text-sm px-2 mt-2">Banking Education Redefined</span>
             </div>
           </div>
 
@@ -47,17 +48,17 @@ const Navbar = () => {
           </div>
 
           {/* Navigation */}
-          <nav className="hidden md:flex items-center space-x-6">
-            <Link to="/" className="text-gray-700 hover:text-purple-600 transition-colors duration-200 px-2 py-1 rounded-md">
+          <div className="flex items-center space-x-6">
+            <Link to="/" className="text-white px-4 py-2 rounded-lg">
               Home
             </Link>
-            <Link to="/about" className="text-gray-700 hover:text-purple-600 transition-colors duration-200 px-2 py-1 rounded-md">
+            <Link to="/about" className="text-white px-4 py-2 rounded-lg">
               About
             </Link>
-            <Link to="/contact" className="text-gray-700 hover:text-purple-600 transition-colors duration-200 px-2 py-1 rounded-md">
+            <Link to="/contact" className="text-white px-4 py-2 rounded-lg">
               Contact
             </Link>
-          </nav>
+          </div>
 
           {/* Mobile menu */}
           <div
@@ -87,14 +88,14 @@ const Navbar = () => {
               <nav className="space-y-4">
                 <Link
                   to="/"
-                  className="block text-gray-700 hover:text-purple-600 transition-colors duration-200 px-3 py-2 rounded-md"
+                  className="block text-white hover:text-purple-600 transition-colors duration-200 px-3 py-2 "
                   onClick={() => setIsOpen(false)}
                 >
                   Home
                 </Link>
                 <Link
                   to="/courses"
-                  className="block text-gray-700 hover:text-purple-600 transition-colors duration-200 px-3 py-2 rounded-md"
+                  className="block text-white hover:text-purple-600 transition-colors duration-200 px-3 py-2 "
                   onClick={() => setIsOpen(false)}
                 >
                   Courses
