@@ -22,11 +22,11 @@ const Navbar = () => {
             alt="KG Logo"
             className="w-14 h-14 object-cover rounded-md"
           />
-          <div className="flex flex-col items-center justify-center leading-tight">
+          <div className="flex flex-col items-start justify-center">
             <h1 className="text-lg sm:text-xl font-bold text-gray-800">
               KG Training & Placements
             </h1>
-            <p className="text-xs sm:text-sm italic text-gray-500 -mt-1">
+            <p className="text-xs sm:text-sm italic text-gray-500">
               Banking Education Redefined
             </p>
           </div>

@@ -98,9 +98,9 @@ const TestimonialsSection = () => {
             <div className="testimonials-video-wrapper">
               <video
                 ref={videoRef}
-                className={`testimonials-video ${isVideoPlaying ? 'playing' : ''}`}
+                className="testimonials-video"
                 onClick={toggleVideoPlay}
-                controls={isVideoPlaying}
+                controls={true}
                 poster="/Screenshot 2025-07-15 094753.png"
                 preload="auto"
                 aria-label="Student testimonials video"

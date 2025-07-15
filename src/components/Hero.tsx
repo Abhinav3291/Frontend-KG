@@ -49,10 +49,10 @@ const Hero: React.FC<HeroProps> = () => {
   }, [slideCount]);
 
   return (
-    <section className="relative bg-black text-white h-screen overflow-hidden flex items-center -mt-2 bg-gradient-to-b from-black to-gray-900">
+    <section className="relative bg-black text-white min-h-[60vh] md:h-screen overflow-hidden flex items-center -mt-2 bg-gradient-to-b from-black to-gray-900">
       {/* Background Image */}
       <div
-        className="absolute inset-0 bg-cover bg-center transition-all duration-2000 ease-in-out"
+        className="absolute inset-0 bg-cover bg-center transition-all duration-2000 ease-in-out sm:bg-[length:100%_60%] md:bg-[length:100%_100%] sm:object-top md:object-center"
         style={{
           backgroundImage: `url(${slides[currentSlide].background})`,
           transform: 'translateY(1px)'
