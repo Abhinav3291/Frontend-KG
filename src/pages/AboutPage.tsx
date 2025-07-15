@@ -2,7 +2,6 @@
 import { motion } from 'framer-motion';
 import { FaCertificate, FaHandshake, FaUsers } from 'react-icons/fa';
 
-import Footer from '../components/Footer';
 
 const AboutPage = () => {
   return (
