@@ -6,8 +6,8 @@ const OpeningStorySection = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
-  const videoSource = '/KG FINAL OK grade.mp4';
-  const posterImage = '/images/video-poster.jpg';
+  const videoSource = 'https://res.cloudinary.com/dyqfgmxio/video/upload/v1752555071/Untitled_video_-_Made_with_Clipchamp_5_cknovg.mp4';
+  const posterImage = '/Screenshot 2025-07-15 094530.png';
 
   const togglePlay = () => {
     if (videoRef.current) {
@@ -38,8 +38,11 @@ const OpeningStorySection = () => {
       >
         <div className="opening-story-text">
           <h2>Founder's Voice</h2>
-          <p>Struggling to keep up with the fast-moving world of web development? I was too, until I discovered a step-by-step approach that actually works. This course is designed to take you from beginner to job-ready, with practical skills you can use immediately.</p>
+          <p>
+            Struggling to keep up with the fast-moving world of web development? I was too, until I discovered a step-by-step approach that actually works. This course is designed to take you from beginner to job-ready, with practical skills you can use immediately.
+          </p>
         </div>
+
         <div className="video-container">
           <div className="video-wrapper">
             <video
@@ -48,7 +51,7 @@ const OpeningStorySection = () => {
               onClick={handleVideoClick}
               controls={isPlaying}
               poster={posterImage}
-              preload="metadata"
+              preload="auto"
               aria-label="Course introduction video"
               onPlay={() => setIsPlaying(true)}
               onPause={() => setIsPlaying(false)}
@@ -56,6 +59,7 @@ const OpeningStorySection = () => {
               <source src={videoSource} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
+
             {!isPlaying && (
               <div
                 className="play-button"

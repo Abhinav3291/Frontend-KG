@@ -135,8 +135,8 @@ const Registration = () => {
   };
 
   return (
-    <section className="py-20 px-6 bg-white">
-      <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+    <section className="py-12 px-6 bg-white">
+      <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-8 items-center">
         {/* Left Section */}
         <div className="text-white bg-gradient-to-r from-purple-900 to-indigo-900 p-10 rounded-xl relative overflow-hidden">
 

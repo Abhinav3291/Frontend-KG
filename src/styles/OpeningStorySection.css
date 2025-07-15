@@ -1,10 +1,11 @@
 /* Opening Story Section */
 .opening-story {
   padding: 4rem 0;
-  background-color: var(--background);
+  background-color: #f3f4f6;
 }
 
 .opening-story-content {
+
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
@@ -50,8 +51,10 @@
 
 .video-wrapper {
   position: relative;
-  padding-top: 56.25%; /* 16:9 Aspect Ratio */
-  background-color: #000;
+  padding-top: 56.25%;
+  /* 16:9 Aspect Ratio */
+  background-color: transparent;
+  /* ✅ Remove black background */
   border-radius: var(--radius-lg);
   overflow: hidden;
 }
@@ -63,9 +66,13 @@
   width: 100%;
   height: 100%;
   border: none;
-  background-color: #000;
+  background-color: transparent;
+  /* ✅ Prevent black flash */
+  object-fit: cover;
+  /* ✅ Prevent scaling issues */
 }
 
+/* Custom Play Button */
 .play-button {
   position: absolute;
   top: 50%;
@@ -96,10 +103,12 @@
   margin-left: 5px;
 }
 
-/* Hide native controls when video is playing */
-.course-video.playing + .play-button {
+/* Hide play button when video is playing */
+.course-video.playing+.play-button {
   opacity: 0;
   pointer-events: none;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
 }
 
 /* Responsive Design */
@@ -107,28 +116,28 @@
   .opening-story {
     padding: 2rem 0;
   }
-  
+
   .opening-story-content {
     flex-direction: column;
     gap: 2rem;
     padding: 0 1.5rem;
   }
-  
+
   .opening-story-text,
   .video-container {
     width: 100%;
     min-width: 100%;
   }
-  
+
   .opening-story h2 {
     font-size: 1.8rem;
   }
-  
+
   .play-button {
     width: 60px;
     height: 60px;
   }
-  
+
   .play-button i {
     font-size: 1.5rem;
   }

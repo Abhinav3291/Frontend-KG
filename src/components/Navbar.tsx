@@ -1,124 +1,73 @@
-import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Menu, X } from 'lucide-react'; // npm install lucide-react (or use Heroicons if preferred)
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
+  const navLinks = [
+    { name: 'Home', path: '/' },
+    { name: 'About', path: '/about' },
+    { name: 'Contact', path: '/contact' },
+  ];
+
   return (
-    <header className="bg-black text-white shadow-md">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
-        <div className="flex justify-between items-center">
-          <div className="flex items-center gap-4">
-            <div className="relative -ml-9">
-              <img
-                src="/photo_2025-07-04_23-04-32.jpg"
-                alt="KG Training Logo"
-                className="w-19 h-16 object-cover"
-              />
+    <header className="bg-white shadow-md sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-0 sm:px-1 lg:px-2 py-0.5 flex justify-between items-center">
 
-            </div>
-            <div className="text-xl sm:text-2xl font-bold flex items-center">
-              <span className="text-white text-2xl">KG Training & Placements </span>
-              <span className="font-style: italic text-sm px-2 mt-2">Banking Education Redefined</span>
-            </div>
-          </div>
-
-          {/* Mobile menu button */}
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-700 hover:text-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2"
-            >
-              <svg
-                className="h-6 w-6"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                {isOpen ? (
-                  <path d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
-          </div>
-
-          {/* Navigation */}
-          <div className="flex items-center space-x-6">
-            <Link to="/" className="text-white px-4 py-2 rounded-lg">
-              Home
-            </Link>
-            <Link to="/about" className="text-white px-4 py-2 rounded-lg">
-              About
-            </Link>
-            <Link to="/contact" className="text-white px-4 py-2 rounded-lg">
-              Contact
-            </Link>
-          </div>
-
-          {/* Mobile menu */}
-          <div
-            className={`md:hidden fixed inset-0 bg-white z-50 transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : 'translate-x-full'
-              }`}
-          >
-            <div className="p-6">
-              <div className="flex justify-between items-center mb-6">
-                <div className="text-xl font-bold text-gray-800">Menu</div>
-                <button
-                  onClick={() => setIsOpen(false)}
-                  className="text-gray-700 hover:text-purple-600"
-                >
-                  <svg
-                    className="h-6 w-6"
-                    fill="none"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
-              <nav className="space-y-4">
-                <Link
-                  to="/"
-                  className="block text-white hover:text-purple-600 transition-colors duration-200 px-3 py-2 "
-                  onClick={() => setIsOpen(false)}
-                >
-                  Home
-                </Link>
-                <Link
-                  to="/courses"
-                  className="block text-white hover:text-purple-600 transition-colors duration-200 px-3 py-2 "
-                  onClick={() => setIsOpen(false)}
-                >
-                  Courses
-                </Link>
-                <Link
-                  to="/about"
-                  className="block text-gray-700 hover:text-purple-600 transition-colors duration-200 px-3 py-2 rounded-md"
-                  onClick={() => setIsOpen(false)}
-                >
-                  About
-                </Link>
-                <Link
-                  to="/contact"
-                  className="block text-gray-700 hover:text-purple-600 transition-colors duration-200 px-3 py-2 rounded-md"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Contact
-                </Link>
-              </nav>
-            </div>
+        {/* Logo and Brand */}
+        <div className="flex items-center gap-1 ml-0">
+          <img
+            src="/photo_2025-07-04_23-04-32.jpg"
+            alt="KG Logo"
+            className="w-14 h-14 object-cover rounded-md"
+          />
+          <div className="flex flex-col items-center justify-center leading-tight">
+            <h1 className="text-lg sm:text-xl font-bold text-gray-800">
+              KG Training & Placements
+            </h1>
+            <p className="text-xs sm:text-sm italic text-gray-500 -mt-1">
+              Banking Education Redefined
+            </p>
           </div>
         </div>
+
+        {/* Desktop Menu */}
+        <nav className="hidden md:flex space-x-8 mr-8">
+          {navLinks.map((link) => (
+            <Link
+              key={link.name}
+              to={link.path}
+              className="text-gray-700 hover:text-indigo-600 transition-colors font-medium py-2"
+            >
+              {link.name}
+            </Link>
+          ))}
+        </nav>
+
+        {/* Mobile Button */}
+        <div className="md:hidden">
+          <button onClick={() => setIsOpen(!isOpen)} className="text-gray-700">
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
+
+      {/* Mobile Menu */}
+      {isOpen && (
+        <div className="md:hidden bg-white px-4 pb-4 space-y-2 shadow">
+          {navLinks.map((link) => (
+            <Link
+              key={link.name}
+              to={link.path}
+              onClick={() => setIsOpen(false)}
+              className="block text-gray-700 hover:text-indigo-600 font-medium py-2 border-b"
+            >
+              {link.name}
+            </Link>
+          ))}
+        </div>
+      )}
     </header>
   );
 };

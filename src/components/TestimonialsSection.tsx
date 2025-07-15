@@ -17,7 +17,7 @@ const renderStars = (count: number) => {
 const TestimonialsSection = () => {
   const videoRef = React.useRef<HTMLVideoElement>(null);
   const [isVideoPlaying, setIsVideoPlaying] = React.useState(false);
-  const [testimonials, setTestimonials] = useState<any[]>([]); // starts empty
+  const [testimonials, setTestimonials] = useState<any[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [newTestimonial, setNewTestimonial] = useState({
     name: '',
@@ -86,6 +86,7 @@ const TestimonialsSection = () => {
           <p>
             Don't just take our word for it. Here's what our students have to say about their learning experience.
           </p>
+
           {/* Video Section */}
           <motion.div
             className="testimonials-video-container"
@@ -97,16 +98,16 @@ const TestimonialsSection = () => {
             <div className="testimonials-video-wrapper">
               <video
                 ref={videoRef}
-                className="testimonials-video"
+                className={`testimonials-video ${isVideoPlaying ? 'playing' : ''}`}
                 onClick={toggleVideoPlay}
                 controls={isVideoPlaying}
-                poster="/images/video-poster.jpg"
-                preload="metadata"
+                poster="/Screenshot 2025-07-15 094753.png"
+                preload="auto"
                 aria-label="Student testimonials video"
                 onPlay={() => setIsVideoPlaying(true)}
                 onPause={() => setIsVideoPlaying(false)}
               >
-                <source src="/IMG_0040.MP4" type="video/mp4" />
+                <source src="https://res.cloudinary.com/dyqfgmxio/video/upload/v1752555104/IMG_0040_gyvj6p.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
               {!isVideoPlaying && (
@@ -117,38 +118,26 @@ const TestimonialsSection = () => {
                   role="button"
                   tabIndex={0}
                   aria-label="Play video"
-                  style={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    width: '80px',
-                    height: '80px',
-                    background: 'rgba(255, 255, 255, 0.2)',
-                    borderRadius: '50%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    cursor: 'pointer',
-                    transition: 'all 0.3s ease',
-                    backdropFilter: 'blur(5px)',
-                    WebkitBackdropFilter: 'blur(5px)',
-                    zIndex: 2
-                  }}
                 >
-                  <i
-                    className="fas fa-play"
-                    style={{
-                      color: 'white',
-                      fontSize: '2rem',
-                      marginLeft: '5px'
-                    }}
-                  ></i>
+                  <i className="fas fa-play"></i>
                 </div>
               )}
             </div>
-            <p className="testimonials-video-caption">Hear directly from our students about their learning journey</p>
+            <p className="testimonials-video-caption">
+              Hear directly from our students about their learning journey
+            </p>
           </motion.div>
+
+          {/* Descriptive Text */}
+          <div className="mt-8 max-w-2xl mx-auto text-center">
+            <p className="text-lg text-gray-600 mb-4">
+              Our students come from diverse backgrounds and have achieved remarkable success in their banking careers. 
+              From fresh graduates to experienced professionals, they share their transformation stories and how our training 
+              programs helped them secure their dream jobs in the banking sector.
+            </p>
+          </div>
+
+          {/* Form toggle */}
           {!showForm ? (
             <button
               onClick={() => setShowForm(true)}
@@ -230,8 +219,7 @@ const TestimonialsSection = () => {
           )}
         </div>
 
-
-
+        {/* Testimonials Display */}
         <div className="testimonials-grid">
           {testimonials.map((testimonial) => (
             <motion.div
