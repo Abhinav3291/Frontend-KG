@@ -2,8 +2,6 @@
 import { motion } from 'framer-motion';
 import { FaCertificate, FaHandshake, FaUsers } from 'react-icons/fa';
 
-
-
 const AboutPage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
