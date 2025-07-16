@@ -66,7 +66,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <Section className="bg-gradient-to-b from-white to-gray-50 pt-20 relative">
+    <Section className="bg-gradient-to-b from-white to-gray-50 py-0 relative">
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left Content */}
