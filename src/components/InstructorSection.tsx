@@ -1,31 +1,184 @@
+import React from 'react';
 import '../styles/CourseSales.css';
 
-const InstructorSection = () => (
-  <section className="instructor-section">
-    <div className="instructor-image-container">
-      <img
-        src="/WhatsApp Image 2025-07-14 at 13.05.02_8c9a4306.jpg"
-        alt="SUKHPREET SINGH"
-        className="instructor-image"
-      />
+import { Section } from './ui/section';
+import { Container } from './ui/container';
+import { cn } from '../lib/utils';
+import { Linkedin, Twitter, Mail, Award, Users, BookOpen } from 'lucide-react';
+import { motion } from 'framer-motion';
 
-    </div>
-    <div className="instructor-info">
-      <h2>Meet Our COO</h2>
-      <div className="instructor-bio">
-        <p>Here is our COO Mr Sukhpreet Singh.
+export interface InstructorStats {
+  students: number;
+  courses: number;
+  yearsExperience: number;
+}
 
-          Visionary Man with Masters in commerce from malwa region whose idea was always to help and serve the society by any means possible.<br /><br />
+export interface SocialLink {
+  platform: 'linkedin' | 'twitter' | 'email';
+  url: string;
+  label: string;
+}
 
-          <strong>Sukhpreet</strong> basically belongs to a small village of Bathinda, Name Rai khana.<br /><br />
+export interface InstructorSectionProps {
+  name: string;
+  role: string;
+  bio: string[];
+  image: {
+    src: string;
+    alt: string;
+  };
+  stats: InstructorStats;
+  socialLinks: SocialLink[];
+  className?: string;
+}
 
-          His vision is to always work for the betterment of the society and help the aspiring candidate to the become the earner of their families. <br /><br />
+const socialIcons: Record<string, React.ReactNode> = {
+  linkedin: <Linkedin className="w-5 h-5" />,
+  twitter: <Twitter className="w-5 h-5" />,
+  email: <Mail className="w-5 h-5" />,
+};
 
-          Where parallel  thought is to provide quality candidates to the corporates.</p>
+const stats = [
+  {
+    icon: <Users className="w-6 h-6 text-blue-600" />,
+    value: (value: number) => `${value.toLocaleString()}+`,
+    label: 'Students',
+    key: 'students',
+  },
+  {
+    icon: <BookOpen className="w-6 h-6 text-blue-600" />,
+    value: (value: number) => `${value}+`,
+    label: 'Courses',
+    key: 'courses',
+  },
+  {
+    icon: <Award className="w-6 h-6 text-blue-600" />,
+    value: (value: number) => `${value}+`,
+    label: 'Years Experience',
+    key: 'yearsExperience',
+  },
+];
 
-      </div>
-    </div>
-  </section>
-);
+const InstructorSection = () => {
+  const name = 'Sukhpreet Singh';
+  const role = 'COO';
+  const bio = [
+    'Visionary leader with a Masters in Commerce from Malwa region, whose mission is to serve society through education and empowerment.',
+    `Hailing from the small village of Rai Khana in Bathinda, ${name} brings a unique perspective to educational leadership.`,
+    'His vision is to empower individuals through quality education, helping them become self-reliant and support their families while providing skilled professionals to the corporate world.'
+  ];
+  const image = {
+    src: '/WhatsApp Image 2025-07-14 at 13.05.02_8c9a4306.jpg',
+    alt: `${name}, ${role} at our institution`
+  };
+  const statsData = {
+    students: 5000,
+    courses: 25,
+    yearsExperience: 10,
+  };
+  const socialLinks = [
+    {
+      platform: 'email',
+      url: 'mailto:contact@example.com',
+      label: 'Send an email',
+    },
+  ];
+
+  return (
+    <Section className={cn('bg-gray-50')}>
+      <Container>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          {/* Instructor Image */}
+          <motion.div
+            className="lg:col-span-5 relative group"
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="relative aspect-square rounded-2xl overflow-hidden shadow-xl">
+              <img
+                src={image.src}
+                alt={image.alt}
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                <div className="space-y-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                  <h3 className="text-white text-2xl font-bold">{name}</h3>
+                  <p className="text-blue-200 font-medium">{role}</p>
+                  <div className="flex space-x-3 pt-2">
+                    {socialLinks.map((link, index) => (
+                      <a
+                        key={index}
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={link.label}
+                        className="text-white hover:text-blue-300 transition-colors"
+                      >
+                        {socialIcons[link.platform]}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Instructor Info */}
+          <motion.div
+            className="lg:col-span-7"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <div className="max-w-3xl">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Meet Our {role.split(' ').pop()}
+              </h2>
+              <h3 className="text-xl text-blue-600 font-semibold mb-6">{name}</h3>
+
+              <div className="space-y-4 text-gray-700 mb-8">
+                {bio.map((paragraph, index) => (
+                  <p key={index} className="leading-relaxed">
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+
+              {/* Stats */}
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+                {stats.map((stat) => (
+                  <div key={stat.key} className="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+                    <div className="flex items-center space-x-3">
+                      <div className="p-2 bg-blue-50 rounded-lg">
+                        {stat.icon}
+                      </div>
+                      <div>
+                        <div className="text-2xl font-bold text-gray-900">
+                          {stat.value(statsData[stat.key as keyof InstructorStats] as number)}
+                        </div>
+                        <div className="text-sm text-gray-500">{stat.label}</div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <a
+                href="#contact"
+                className="inline-flex items-center justify-center rounded-md border border-blue-600 px-4 py-2 text-base font-medium text-blue-600 hover:bg-blue-50 hover:border-blue-700 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+              >
+                Get in Touch
+              </a>
+            </div>
+          </motion.div>
+        </div>
+      </Container>
+    </Section>
+  );
+};
 
 export default InstructorSection;

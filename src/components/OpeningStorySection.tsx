@@ -39,7 +39,8 @@ const OpeningStorySection = () => {
         <div className="opening-story-text">
           <h2>Founder's Voice</h2>
           <p>
-            Struggling to keep up with the fast-moving world of web development? I was too, until I discovered a step-by-step approach that actually works. This course is designed to take you from beginner to job-ready, with practical skills you can use immediately.
+            When I started KG Training & Placements, it was not just to teach — it was to empower. I saw a gap between what students learn and what industries need. My goal was to bridge that gap.
+            We don't just train for exams — we build confidence, skills, and most importantly, a career path. KG isn't just an institute, it's a launchpad
           </p>
         </div>
 

@@ -5,8 +5,6 @@ import ThreePromises from "./components/ThreePromises.tsx";
 
 import ContactPage from './pages/ContactPage.tsx';
 import AboutPage from './pages/AboutPage.tsx';
-
-
 import Footer from "./components/Footer.tsx";
 import Registration from "./components/Registration.tsx";
 import Navbar from "./components/Navbar.tsx";

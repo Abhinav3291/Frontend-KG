@@ -1,6 +1,9 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Menu, X } from 'lucide-react'; // npm install lucide-react (or use Heroicons if preferred)
+import { Link, useLocation } from 'react-router-dom';
+import { Menu, X } from 'lucide-react';
+import { Container } from './ui/container';
+import { Button } from './ui/button';
+import { cn } from '../lib/utils';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,38 +14,47 @@ const Navbar = () => {
     { name: 'Contact', path: '/contact' },
   ];
 
+  const location = useLocation();
+  const isActive = (path: string) => location.pathname === path;
+
   return (
-    <header className="bg-white shadow-md sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-0 sm:px-1 lg:px-2 py-0.5 flex justify-between items-center">
+    <header className="bg-white shadow-sm sticky top-0 z-50">
+      <Container className="flex justify-between items-center h-16">
 
         {/* Logo and Brand */}
-        <div className="flex items-center gap-1 ml-0">
+        <div className="flex items-center gap-2">
           <img
             src="/photo_2025-07-04_23-04-32.jpg"
             alt="KG Logo"
             className="w-14 h-14 object-cover rounded-md"
           />
-          <div className="flex flex-col items-start justify-center">
-            <h1 className="text-lg sm:text-xl font-bold text-gray-800">
+          <div className="leading-snug">
+            <h1 className="text-lg sm:text-xl font-bold text-gray-800 mb-0 mt-2">
               KG Training & Placements
             </h1>
-            <p className="text-xs sm:text-sm italic text-gray-500">
+            <p className="text-xs sm:text-sm italic text-gray-500 mt-0">
               Banking Education Redefined
             </p>
           </div>
         </div>
 
         {/* Desktop Menu */}
-        <nav className="hidden md:flex space-x-8 mr-8">
+        <nav className="hidden md:flex items-center space-x-6">
           {navLinks.map((link) => (
             <Link
               key={link.name}
               to={link.path}
-              className="text-gray-700 hover:text-indigo-600 transition-colors font-medium py-2"
+              className={cn(
+                'text-gray-700 hover:text-primary-600 transition-colors font-medium px-3 py-2 rounded-md',
+                isActive(link.path) ? 'text-primary-600 font-semibold' : 'text-gray-700 hover:text-primary-600'
+              )}
             >
               {link.name}
             </Link>
           ))}
+          <Button className="ml-4">
+            Get Started
+          </Button>
         </nav>
 
         {/* Mobile Button */}
@@ -51,21 +63,31 @@ const Navbar = () => {
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
-      </div>
+      </Container>
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-white px-4 pb-4 space-y-2 shadow">
+        <div className="md:hidden bg-white px-4 pb-4 space-y-2 shadow-lg">
           {navLinks.map((link) => (
             <Link
               key={link.name}
               to={link.path}
               onClick={() => setIsOpen(false)}
-              className="block text-gray-700 hover:text-indigo-600 font-medium py-2 border-b"
+              className={cn(
+                'block px-3 py-2 rounded-md text-base font-medium',
+                isActive(link.path)
+                  ? 'bg-primary-50 text-primary-600'
+                  : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
+              )}
             >
               {link.name}
             </Link>
           ))}
+          <div className="pt-4 pb-2 border-t border-gray-200">
+            <Button className="w-full">
+              Get Started
+            </Button>
+          </div>
         </div>
       )}
     </header>

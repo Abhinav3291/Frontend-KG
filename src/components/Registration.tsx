@@ -1,7 +1,11 @@
-// components/Registration.tsx
 import React, { useState } from "react";
 import { authAPI } from "../services/api";
-import { Alert, Snackbar, CircularProgress } from "@mui/material";
+import { Loader2, CheckCircle, AlertCircle, X } from "lucide-react";
+
+// Utility for className joins
+function cn(...classes: (string | boolean | undefined)[]) {
+  return classes.filter(Boolean).join(' ');
+}
 
 type FormData = {
   name: string;
@@ -12,10 +16,18 @@ type FormData = {
   course: string;
 };
 
-type SnackbarState = {
+type FormErrors = {
+  name?: string;
+  email?: string;
+  phone?: string;
+  address?: string;
+  course?: string;
+};
+
+type ToastType = {
   open: boolean;
   message: string;
-  severity: 'success' | 'error' | 'info';
+  type: 'success' | 'error' | 'info';
 };
 
 const Registration = () => {
@@ -28,66 +40,55 @@ const Registration = () => {
     course: "Banking and Finance Course",
   });
 
-  const [errors, setErrors] = useState<Partial<FormData>>({});
+  const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [snackbar, setSnackbar] = useState<SnackbarState>({
+  const [toast, setToast] = useState<ToastType>({
     open: false,
-    message: "",
-    severity: "info",
+    message: '',
+    type: 'info'
   });
 
+  const handleCloseToast = () => {
+    setToast(prev => ({ ...prev, open: false }));
+  };
+
   const validateForm = (): boolean => {
-    const newErrors: Partial<FormData> = {};
+    const newErrors: FormErrors = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^\d{10}$/;
 
-    if (!formData.name.trim()) {
-      newErrors.name = "Name is required";
-    }
+    if (!formData.name.trim()) newErrors.name = "Name is required";
+    else if (formData.name.trim().length < 2) newErrors.name = "Name must be at least 2 characters";
 
-    if (!formData.email) {
-      newErrors.email = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Email is invalid";
-    }
+    if (!formData.email) newErrors.email = "Email is required";
+    else if (!emailRegex.test(formData.email)) newErrors.email = "Please enter a valid email address";
 
-    if (!formData.phone) {
-      newErrors.phone = "Phone number is required";
-    } else if (!/^[0-9]{10}$/.test(formData.phone)) {
-      newErrors.phone = "Please enter a valid 10-digit phone number";
-    }
+    if (!formData.phone) newErrors.phone = "Phone number is required";
+    else if (!phoneRegex.test(formData.phone)) newErrors.phone = "Please enter a valid 10-digit phone number";
 
-    if (!formData.address.trim()) {
-      newErrors.address = "Address is required";
-    }
+    if (!formData.address.trim()) newErrors.address = "Address is required";
+    else if (formData.address.trim().length < 10) newErrors.address = "Please provide a more detailed address";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    setFormData(prev => ({ ...prev, [name]: value }));
 
-    // Clear error when user starts typing
-    if (errors[name as keyof FormData]) {
-      setErrors(prev => ({
-        ...prev,
-        [name]: ""
-      }));
+    if (errors[name as keyof FormErrors]) {
+      const updatedErrors = { ...errors };
+      delete updatedErrors[name as keyof FormErrors];
+      setErrors(updatedErrors);
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!validateForm()) {
-      setSnackbar({
-        open: true,
-        message: "Please fix the errors in the form",
-        severity: "error"
-      });
+      setToast({ open: true, message: "Please fix the errors in the form", type: "error" });
       return;
     }
 
@@ -99,11 +100,9 @@ const Registration = () => {
         email: formData.email,
         phone: formData.phone,
         course: formData.course,
-        // Include additional info in the message
-        message: `Address: ${formData.address}\n\nComments: ${formData.comment || 'No comments'}`
+        message: `Address: ${formData.address}\n\nComments: ${formData.comment || 'No comments'}`,
       });
 
-      // Reset form on success
       setFormData({
         name: "",
         email: "",
@@ -113,165 +112,169 @@ const Registration = () => {
         course: "Banking and Finance Course",
       });
 
-      setSnackbar({
+      setToast({
         open: true,
         message: "Registration successful! We'll contact you soon.",
-        severity: "success"
+        type: "success"
       });
     } catch (error) {
       console.error("Registration error:", error);
-      setSnackbar({
+      setToast({
         open: true,
         message: "Failed to submit registration. Please try again later.",
-        severity: "error"
+        type: "error"
       });
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const handleCloseSnackbar = () => {
-    setSnackbar(prev => ({ ...prev, open: false }));
-  };
-
   return (
-    <section className="py-12 px-6 bg-white">
-      <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-8 items-center">
-        {/* Left Section */}
-        <div className="text-white bg-gradient-to-r from-purple-900 to-indigo-900 p-10 rounded-xl relative overflow-hidden">
-
-          <h2 className="text-4xl md:text-5xl font-bold leading-tight">
-
-
-            Kindly fill the aside {/*icon */} form to <span className="text-yellow-400">Register</span>
-          </h2>
-          <p className="mt-6 text-gray-200 text-lg">
-            Learn something new & Build Your Career From Anywhere In The World
-          </p>
-        </div>
-
+    <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+      <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg overflow-hidden md:flex">
         {/* Right Section */}
-        <form
-          onSubmit={handleSubmit}
-          className="bg-white p-8 rounded-lg shadow-xl border border-gray-200 w-full max-w-md mx-auto"
-        >
-          <h3 className="text-xl font-semibold mb-6 text-gray-800">Fill Your Registration</h3>
-
-          <div className="mb-4">
-            <input
-              type="text"
-              name="name"
-              placeholder="Your Name"
-              value={formData.name}
-              onChange={handleChange}
-              className={`w-full px-4 py-2 bg-gray-100 border ${errors.name ? 'border-red-500' : 'border-gray-300'} rounded focus:outline-none focus:ring-2 focus:ring-purple-500`}
-              required
-            />
-            {errors.name && (
-              <p className="mt-1 text-sm text-red-500">{errors.name}</p>
-            )}
-          </div>
-
-          <div className="flex gap-4 mb-4">
-            <div className="w-1/2">
+        <div className="w-full p-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">Registration Form</h2>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
               <input
-                type="email"
-                name="email"
-                placeholder="Email Address"
-                value={formData.email}
-                onChange={handleChange}
-                className={`w-full px-4 py-2 bg-gray-100 border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded focus:outline-none focus:ring-2 focus:ring-purple-500`}
-                required
+                id="name"
+                name="name"
+                type="text"
+                value={formData.name}
+                onChange={handleInputChange}
+                className={cn(
+                  'w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500',
+                  errors.name ? "border-red-500" : "border-gray-300"
+                )}
               />
-              {errors.email && (
-                <p className="mt-1 text-sm text-red-500">{errors.email}</p>
-              )}
+              {errors.name && <p className="text-sm text-red-600">{errors.name}</p>}
             </div>
-            <div className="w-1/2">
-              <input
-                type="tel"
-                name="phone"
-                placeholder="Phone Number"
-                value={formData.phone}
-                onChange={handleChange}
-                className={`w-full px-4 py-2 bg-gray-100 border ${errors.phone ? 'border-red-500' : 'border-gray-300'} rounded focus:outline-none focus:ring-2 focus:ring-purple-500`}
-                required
-              />
-              {errors.phone && (
-                <p className="mt-1 text-sm text-red-500">{errors.phone}</p>
-              )}
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email *</label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  className={cn(
+                    'w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500',
+                    errors.email ? "border-red-500" : "border-gray-300"
+                  )}
+                />
+                {errors.email && <p className="text-sm text-red-600">{errors.email}</p>}
+              </div>
+
+              <div>
+                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">Phone *</label>
+                <input
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  className={cn(
+                    'w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500',
+                    errors.phone ? "border-red-500" : "border-gray-300"
+                  )}
+                />
+                {errors.phone && <p className="text-sm text-red-600">{errors.phone}</p>}
+              </div>
             </div>
-          </div>
 
-          <div className="mb-4">
-            <input
-              type="text"
-              name="address"
-              placeholder="Full Address"
-              value={formData.address}
-              onChange={handleChange}
-              className={`w-full px-4 py-2 bg-gray-100 border ${errors.address ? 'border-red-500' : 'border-gray-300'} rounded focus:outline-none focus:ring-2 focus:ring-purple-500`}
-              required
-            />
-            {errors.address && (
-              <p className="mt-1 text-sm text-red-500">{errors.address}</p>
-            )}
-          </div>
+            <div>
+              <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-1">Address *</label>
+              <textarea
+                id="address"
+                name="address"
+                value={formData.address}
+                onChange={handleInputChange}
+                className={cn(
+                  'w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 min-h-[100px]',
+                  errors.address ? "border-red-500" : "border-gray-300"
+                )}
+              ></textarea>
+              {errors.address && <p className="text-sm text-red-600">{errors.address}</p>}
+            </div>
 
-          <div className="mb-4">
-            <select
-              name="course"
-              value={formData.course}
-              onChange={handleChange}
-              className="w-full px-4 py-2 bg-gray-100 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-700"
+            <div>
+              <label htmlFor="course" className="block text-sm font-medium text-gray-700 mb-1">Select Course</label>
+              <select
+                id="course"
+                name="course"
+                value={formData.course}
+                onChange={handleInputChange}
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="Banking and Finance Course">Banking and Finance Course</option>
+
+              </select>
+            </div>
+
+            <div>
+              <label htmlFor="comment" className="block text-sm font-medium text-gray-700 mb-1">Additional Comments</label>
+              <textarea
+                id="comment"
+                name="comment"
+                rows={3}
+                value={formData.comment}
+                onChange={handleInputChange}
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+              ></textarea>
+            </div>
+
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className={cn(
+                "w-full bg-gradient-to-r from-blue-600 to-blue-800 text-white py-3 px-6 rounded-md transition-all flex items-center justify-center",
+                isSubmitting ? "opacity-75 cursor-not-allowed" : "hover:shadow-lg"
+              )}
             >
-              <option value="Banking and Finance Course">Banking and Finance Course</option>
-
-            </select>
-          </div>
-
-          <textarea
-            name="comment"
-            placeholder="Comment"
-            rows={3}
-            value={formData.comment}
-            onChange={handleChange}
-            className="w-full mb-6 px-4 py-2 bg-gray-100 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
-          ></textarea>
-
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className={`w-full py-2 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded transition flex justify-center items-center ${isSubmitting ? 'opacity-75 cursor-not-allowed' : ''
-              }`}
-          >
-            {isSubmitting ? (
-              <>
-                <CircularProgress size={24} color="inherit" className="mr-2" />
-                Submitting...
-              </>
-            ) : (
-              'Register →'
-            )}
-          </button>
-        </form>
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="animate-spin mr-2 h-5 w-5" />
+                  Submitting...
+                </>
+              ) : (
+                'Register Now'
+              )}
+            </button>
+          </form>
+        </div>
       </div>
 
-      <Snackbar
-        open={snackbar.open}
-        autoHideDuration={6000}
-        onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      >
-        <Alert
-          onClose={handleCloseSnackbar}
-          severity={snackbar.severity}
-          variant="filled"
-          sx={{ width: '100%' }}
+      {/* Toast Notification */}
+      {toast.open && (
+        <div
+          className={cn(
+            "fixed bottom-4 right-4 z-50 w-full max-w-sm p-4 border-l-4 rounded-lg shadow-md bg-white transition-all duration-300",
+            toast.type === "success" ? "border-green-500" : "border-red-500"
+          )}
         >
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
+          <div className="flex items-start">
+            <div className={cn(
+              "h-6 w-6 flex items-center justify-center rounded-full",
+              toast.type === "success" ? "bg-green-100 text-green-600" : "bg-red-100 text-red-600"
+            )}>
+              {toast.type === "success" ? <CheckCircle className="h-4 w-4" /> : <AlertCircle className="h-4 w-4" />}
+            </div>
+            <div className="ml-3 flex-1">
+              <p className="text-sm font-semibold text-gray-900">
+                {toast.type === "success" ? "Success" : "Error"}
+              </p>
+              <p className="text-sm text-gray-600">{toast.message}</p>
+            </div>
+            <button onClick={handleCloseToast} className="ml-4 text-gray-400 hover:text-gray-600">
+              <X className="h-5 w-5" />
+            </button>
+          </div>
+        </div>
+      )}
     </section>
   );
 };

@@ -80,7 +80,7 @@ async function apiRequest<T = any>(
     return response.data;
   } catch (error) {
     const axiosError = error as AxiosError<ApiResponse>;
-    
+
     // Handle network errors
     if (!axiosError.response) {
       return {
@@ -159,7 +159,7 @@ apiClient.interceptors.response.use(
         }
       });
     }
-    
+
     // For other errors, just pass them through
     return Promise.reject(error);
   }
@@ -167,47 +167,47 @@ apiClient.interceptors.response.use(
 
 // Auth API
 export const authAPI = {
-  register: (data: AuthData) => 
+  register: (data: AuthData) =>
     apiRequest('/auth/register', 'POST', data),
 };
 
 // Contact API
 export const contactAPI = {
-  send: (data: ContactData) => 
+  send: (data: ContactData) =>
     apiRequest<{ message: string }>('/contact', 'POST', data, {
       headers: {
         'Content-Type': 'application/json',
       },
     }),
-  
-  getInquiries: () => 
+
+  getInquiries: () =>
     apiRequest<Array<ContactData>>('/contact', 'GET'),
-  
-  getInquiry: (id: string) => 
+
+  getInquiry: (id: string) =>
     apiRequest<ContactData>(`/contact/${id}`, 'GET')
 };
 
 // Feedback API
 export const feedbackAPI = {
-  submit: (data: FeedbackData) => 
+  submit: (data: FeedbackData) =>
     apiRequest<{ message: string }>('/feedback', 'POST', data, {
       headers: {
         'Content-Type': 'application/json',
       },
     }),
-  
-  getAllFeedback: () => 
+
+  getAllFeedback: () =>
     apiRequest<Array<FeedbackData>>('/feedback', 'GET'),
-  
-  getFeedbackByRating: (rating: number) => 
+
+  getFeedbackByRating: (rating: number) =>
     apiRequest<Array<FeedbackData>>('/feedback', 'GET', { rating }),
-  
-  deleteFeedback: (id: string) => 
+
+  deleteFeedback: (id: string) =>
     apiRequest<{ message: string }>(`/feedback/${id}`, 'DELETE')
 };
 
 // Health check
-export const healthCheck = () => 
+export const healthCheck = () =>
   apiClient.get('/health')
     .then(response => response.data)
     .catch(error => ({
