@@ -10,6 +10,7 @@ const Navbar = () => {
 
   const navLinks = [
     { name: 'Home', path: '/' },
+    { name: 'Why KG', path: '/why-kg' },
     { name: 'About', path: '/about' },
     { name: 'Contact', path: '/contact' },
   ];

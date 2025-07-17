@@ -5,32 +5,32 @@ import { Container } from './ui/container';
 const partners = [
   {
     name: 'Cholamandalam',
-    logo: '/images/partners/cholamandalam.svg',
+    logo: '/images/partners/chola_bank_logo.png',
     alt: 'Cholamandalam Logo'
   },
   {
     name: 'HDFC Bank',
-    logo: '/png-transparent-hdfc-bank-logo-indian-bank.png',
+    logo: '/images/partners/hdfc_bank_logo.png',
     alt: 'HDFC Bank Logo'
   },
   {
     name: 'Axis Bank',
-    logo: '/images/partners/axis.svg',
+    logo: '/images/partners/axis_bank.png',
     alt: 'Axis Bank Logo'
   },
   {
     name: 'AU Small Finance Bank',
-    logo: '/images/partners/au.svg',
+    logo: '/images/partners/au_bank_logo.png',
     alt: 'AU Bank Logo'
   },
   {
     name: 'Kotak Mahindra Bank',
-    logo: '/images/partners/kotak.svg',
+    logo: '/images/partners/Kotak_Mahindra_Bank_logo.png',
     alt: 'Kotak Logo'
   },
   {
     name: 'Yes Bank',
-    logo: '/images/partners/yesbank.svg',
+    logo: '/images/partners/yes_bank_logo.png',
     alt: 'Yes Bank Logo'
   }
 ];

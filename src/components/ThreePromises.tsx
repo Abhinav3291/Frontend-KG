@@ -37,7 +37,7 @@ const promises = [
 
 const ThreePromises = () => {
   return (
-    <Section className="bg-gray-50">
+    <Section className="bg-gray-50 -mt-16">
       <Container>
         <motion.div 
           className="text-center"
