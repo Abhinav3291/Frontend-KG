@@ -18,21 +18,21 @@ const Navbar = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <header className="bg-white shadow-sm sticky top-0 z-50">
-      <Container className="flex justify-between items-center h-16">
+    <header className="bg-white shadow-sm stiky top-0 z-50">
+      <Container className="flex justify-between items-center py-2">
 
         {/* Logo and Brand */}
         <div className="flex items-center gap-2">
           <img
-            src="/photo_2025-07-04_23-04-32.jpg"
+            src="/kg_logo.jpg"
             alt="KG Logo"
             className="w-14 h-14 object-cover rounded-md"
           />
           <div className="leading-snug">
-            <h1 className="text-lg sm:text-xl font-bold text-gray-800 mb-0 mt-2">
+            <h1 className="text-lg sm:text-xl font-bold text-blue-900 mb-0 mt-2">
               KG Training & Placements
             </h1>
-            <p className="text-xs sm:text-sm italic text-gray-500 mt-0">
+            <p className="text-xs sm:text-sm italic text-blue-900 mt-0">
               Banking Education Redefined
             </p>
           </div>

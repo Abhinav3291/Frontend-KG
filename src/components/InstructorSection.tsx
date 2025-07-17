@@ -38,27 +38,6 @@ const socialIcons: Record<string, React.ReactNode> = {
   email: <Mail className="w-5 h-5" />,
 };
 
-const stats = [
-  {
-    icon: <Users className="w-6 h-6 text-blue-600" />,
-    value: (value: number) => `${value.toLocaleString()}+`,
-    label: 'Students',
-    key: 'students',
-  },
-  {
-    icon: <BookOpen className="w-6 h-6 text-blue-600" />,
-    value: (value: number) => `${value}+`,
-    label: 'Courses',
-    key: 'courses',
-  },
-  {
-    icon: <Award className="w-6 h-6 text-blue-600" />,
-    value: (value: number) => `${value}+`,
-    label: 'Years Experience',
-    key: 'yearsExperience',
-  },
-];
-
 const InstructorSection = () => {
   const name = 'Sukhpreet Singh';
   const role = 'COO';
@@ -70,11 +49,6 @@ const InstructorSection = () => {
   const image = {
     src: '/WhatsApp Image 2025-07-14 at 13.05.02_8c9a4306.jpg',
     alt: `${name}, ${role} at our institution`
-  };
-  const statsData = {
-    students: 5000,
-    courses: 25,
-    yearsExperience: 10,
   };
   const socialLinks = [
     {
@@ -100,7 +74,7 @@ const InstructorSection = () => {
               <img
                 src={image.src}
                 alt={image.alt}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                className="w-auto h-auto object-fit transition-transform duration-500 group-hover:scale-105"
                 loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
@@ -147,32 +121,6 @@ const InstructorSection = () => {
                   </p>
                 ))}
               </div>
-
-              {/* Stats */}
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
-                {stats.map((stat) => (
-                  <div key={stat.key} className="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
-                    <div className="flex items-center space-x-3">
-                      <div className="p-2 bg-blue-50 rounded-lg">
-                        {stat.icon}
-                      </div>
-                      <div>
-                        <div className="text-2xl font-bold text-gray-900">
-                          {stat.value(statsData[stat.key as keyof InstructorStats] as number)}
-                        </div>
-                        <div className="text-sm text-gray-500">{stat.label}</div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <a
-                href="#contact"
-                className="inline-flex items-center justify-center rounded-md border border-blue-600 px-4 py-2 text-base font-medium text-blue-600 hover:bg-blue-50 hover:border-blue-700 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
-              >
-                Get in Touch
-              </a>
             </div>
           </motion.div>
         </div>
