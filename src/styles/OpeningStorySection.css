@@ -1,0 +1,144 @@
+/* Opening Story Section */
+.opening-story {
+  padding: 4rem 0;
+  background-color: #f3f4f6;
+}
+
+.opening-story-content {
+
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.opening-story-text {
+  flex: 1;
+  min-width: 300px;
+}
+
+.opening-story h2 {
+  font-size: 2.2rem;
+  color: var(--text);
+  margin-bottom: 1.5rem;
+  line-height: 1.3;
+}
+
+.opening-story p {
+  font-size: 1.1rem;
+  color: var(--text-light);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+.video-container {
+  flex: 1;
+  min-width: 300px;
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.video-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.video-wrapper {
+  position: relative;
+  padding-top: 56.25%;
+  /* 16:9 Aspect Ratio */
+  background-color: transparent;
+  /* ✅ Remove black background */
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.course-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  background-color: transparent;
+  /* ✅ Prevent black flash */
+  object-fit: cover;
+  /* ✅ Prevent scaling issues */
+}
+
+/* Custom Play Button */
+.play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  z-index: 2;
+}
+
+.play-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.play-button i {
+  color: white;
+  font-size: 2rem;
+  margin-left: 5px;
+}
+
+/* Hide play button when video is playing */
+.course-video.playing+.play-button {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .opening-story {
+    padding: 2rem 0;
+  }
+
+  .opening-story-content {
+    flex-direction: column;
+    gap: 2rem;
+    padding: 0 1.5rem;
+  }
+
+  .opening-story-text,
+  .video-container {
+    width: 100%;
+    min-width: 100%;
+  }
+
+  .opening-story h2 {
+    font-size: 1.8rem;
+  }
+
+  .play-button {
+    width: 60px;
+    height: 60px;
+  }
+
+  .play-button i {
+    font-size: 1.5rem;
+  }
+}
