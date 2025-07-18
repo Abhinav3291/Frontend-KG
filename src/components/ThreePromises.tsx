@@ -37,9 +37,9 @@ const promises = [
 
 const ThreePromises = () => {
   return (
-    <Section className="bg-gray-50 -mt-16">
+    <Section className="bg-gray-50 -mt-16 -mb-16">
       <Container>
-        <motion.div 
+        <motion.div
           className="text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -50,7 +50,7 @@ const ThreePromises = () => {
           <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-12">
             We're committed to your success with these fundamental guarantees
           </p>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {promises.map((promise) => (
               <motion.div

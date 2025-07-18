@@ -28,7 +28,7 @@ const OpeningStorySection = () => {
   };
 
   return (
-    <section className="opening-story">
+    <section className="opening-story -mb-16 py-5">
       <motion.div
         className="opening-story-content"
         initial={{ opacity: 0, y: 20 }}
@@ -37,7 +37,7 @@ const OpeningStorySection = () => {
         transition={{ duration: 0.6 }}
       >
         <div className="opening-story-text">
-          <h2>Founder's Voice</h2>
+          <h2 className='font-bold'>Founder's Voice</h2>
           <p>
             When I started KG Training & Placements, it was not just to teach — it was to empower. I saw a gap between what students learn and what industries need. My goal was to bridge that gap.
             We don't just train for exams — we build confidence, skills, and most importantly, a career path. KG isn't just an institute, it's a launchpad

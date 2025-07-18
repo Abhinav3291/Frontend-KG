@@ -126,7 +126,7 @@ const TestimonialsSection = () => {
   };
 
   return (
-    <Section className="bg-gray-50">
+    <Section className="bg-gray-50 -mb-16">
       <Container>
         <motion.div
           className="text-center mb-12"
@@ -136,7 +136,7 @@ const TestimonialsSection = () => {
           transition={{ duration: 0.6 }}
         >
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Student Success Stories
+            Our Success Stories
           </h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
             Hear from our students about their learning journey and career growth
@@ -200,141 +200,6 @@ const TestimonialsSection = () => {
           </p>
         </motion.div>
 
-        {/* Testimonial Form */}
-        <div className="max-w-2xl mx-auto mb-16">
-          {!showForm ? (
-            <div className="text-center">
-              <Button
-                onClick={() => setShowForm(true)}
-                variant="default"
-                size="lg"
-                className="mx-auto"
-              >
-                Share Your Experience
-              </Button>
-            </div>
-          ) : (
-            <motion.div
-              className="bg-white p-6 md:p-8 rounded-xl shadow-sm"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <div className="flex justify-between items-center mb-6">
-                <h3 className="text-xl font-bold text-gray-900">Share Your Experience</h3>
-                <button
-                  onClick={() => setShowForm(false)}
-                  className="text-gray-400 hover:text-gray-500"
-                  aria-label="Close form"
-                >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
-
-              {formError && (
-                <div className="mb-4 p-3 bg-red-50 text-red-700 rounded-md text-sm">
-                  {formError}
-                </div>
-              )}
-
-              {formSuccess && (
-                <div className="mb-4 p-3 bg-green-50 text-green-700 rounded-md text-sm">
-                  {formSuccess}
-                </div>
-              )}
-
-              <form onSubmit={handleSubmit}>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                      Your Name <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      value={newTestimonial.name}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                      required
-                      disabled={isSubmitting}
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="role" className="block text-sm font-medium text-gray-700 mb-1">
-                      Your Role/Position
-                    </label>
-                    <input
-                      type="text"
-                      id="role"
-                      name="role"
-                      value={newTestimonial.role}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                      disabled={isSubmitting}
-                    />
-                  </div>
-                </div>
-
-                <div className="mb-4">
-                  <label htmlFor="content" className="block text-sm font-medium text-gray-700 mb-1">
-                    Your Experience <span className="text-red-500">*</span>
-                  </label>
-                  <textarea
-                    id="content"
-                    name="content"
-                    value={newTestimonial.content}
-                    onChange={handleInputChange}
-                    rows={4}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                    required
-                    disabled={isSubmitting}
-                  ></textarea>
-                </div>
-
-                <div className="mb-6">
-                  <label htmlFor="rating" className="block text-sm font-medium text-gray-700 mb-1">
-                    Your Rating
-                  </label>
-                  <select
-                    id="rating"
-                    name="rating"
-                    value={newTestimonial.rating}
-                    onChange={handleInputChange}
-                    className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                    disabled={isSubmitting}
-                  >
-                    {[5, 4, 3, 2, 1].map(num => (
-                      <option key={num} value={num}>
-                        {num} {num === 1 ? 'star' : 'stars'}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div className="flex flex-col sm:flex-row justify-end space-y-3 sm:space-y-0 sm:space-x-3">
-                  <Button
-                    type="button"
-                    onClick={() => setShowForm(false)}
-                    variant="outline"
-                    disabled={isSubmitting}
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    type="submit"
-                    variant="default"
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? 'Submitting...' : 'Submit Testimonial'}
-                  </Button>
-                </div>
-              </form>
-            </motion.div>
-          )}
-        </div>
 
         {/* Testimonials Grid */}
         {testimonials.length > 0 && (

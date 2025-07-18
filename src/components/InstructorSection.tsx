@@ -59,7 +59,7 @@ const InstructorSection = () => {
   ];
 
   return (
-    <Section className={cn('bg-gray-50')}>
+    <Section className={cn('bg-gray-50 -mb-16')}>
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Instructor Image */}
@@ -70,6 +70,9 @@ const InstructorSection = () => {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
           >
+            <h2 className="sm:block md:hidden text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Meet Our {role.split(' ').pop()}
+            </h2>
             <div className="relative aspect-square rounded-2xl overflow-hidden shadow-xl">
               <img
                 src={image.src}
@@ -109,7 +112,7 @@ const InstructorSection = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <div className="max-w-3xl">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              <h2 className="hidden sm:block text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                 Meet Our {role.split(' ').pop()}
               </h2>
               <h3 className="text-xl text-blue-600 font-semibold mb-6">{name}</h3>

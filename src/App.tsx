@@ -9,6 +9,8 @@ import Footer from "./components/Footer.tsx";
 import Registration from "./components/Registration.tsx";
 import Navbar from "./components/Navbar.tsx";
 import CourseSalesPage from './pages/CourseSalesPage';
+import WhyKgPage from './pages/WhyKgPage.tsx';
+
 
 const App = () => {
   return (
@@ -29,6 +31,7 @@ const App = () => {
           } />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/why-kg" element={<WhyKgPage />} />
 
         </Routes>
         <Footer />

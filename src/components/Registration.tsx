@@ -130,7 +130,7 @@ const Registration = () => {
   };
 
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+    <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50 -mt-16">
       <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg overflow-hidden md:flex">
         {/* Right Section */}
         <div className="w-full p-8">
