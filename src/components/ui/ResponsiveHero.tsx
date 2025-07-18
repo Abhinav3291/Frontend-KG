@@ -1,4 +1,4 @@
-import React, { useState, useEffect, type JSX } from "react";
+import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 // TypeScript interface for slide
@@ -12,7 +12,8 @@ interface Slide {
   redirectTo: string;
 }
 
-export default function ResponsiveHero(): JSX.Element {
+export default function ResponsiveHero() {
+
   const [currentSlide, setCurrentSlide] = useState<number>(0);
 
   const slides: Slide[] = [
