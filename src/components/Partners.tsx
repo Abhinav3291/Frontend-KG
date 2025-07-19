@@ -64,7 +64,7 @@ const Partners = () => {
   }, []);
 
   return (
-    <Section className="bg-white">
+    <Section className="bg-white -mb-16">
       <Container>
         <h2 className="text-3xl font-bold text-center mb-8 text-gray-900">
           Our Alumni's Placed in Top Organizations

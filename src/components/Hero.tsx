@@ -83,6 +83,12 @@ export default function Hero(): JSX.Element {
   const prevSlide = (): void =>
     setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
 
+  // Handle brochure download/view
+  const handleViewBrochure = (): void => {
+    const brochureUrl = '/files/kg_broucher.pdf';
+    window.open(brochureUrl, '_blank', 'noopener,noreferrer');
+  };
+
   return (
     <div className="-mt-16 -mb-16 min-h-screen bg-black text-white ">
 
@@ -122,8 +128,11 @@ export default function Hero(): JSX.Element {
                   </div>
                 ))}
               </div>
-              <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded-md transition">
-                Enroll Now
+              <button
+                onClick={handleViewBrochure}
+                className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded-md transition"
+              >
+                View Brochure
               </button>
             </div>
           </div>

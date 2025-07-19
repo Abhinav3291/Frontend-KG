@@ -3,6 +3,7 @@ import { Section } from '../components/ui/section';
 import { Container } from '../components/ui/container';
 import { Briefcase, Target, Users } from 'lucide-react';
 import IndustoryNetwork from '../components/IndustoryNetwork';
+import TechnicalHead from '../components/ui/TechnicalHead';
 
 const AboutPage = () => {
   const cardVariants = {
@@ -66,6 +67,7 @@ const AboutPage = () => {
         </div>
 
         <div className='mt-5'>
+          <TechnicalHead />
           <IndustoryNetwork />
         </div>
 
