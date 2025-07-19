@@ -1,5 +1,5 @@
 // Updated WhyKgPage.tsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Container } from '../components/ui/container';
 import { Button } from '../components/ui/button';
 import {
@@ -13,9 +13,7 @@ import {
     ArrowRight,
 } from 'lucide-react';
 
-type Props = {};
-
-const WhyKgPage = (props: Props) => {
+const WhyKgPage = () => {
     const [activeTab, setActiveTab] = useState<'students' | 'corporates'>('students');
 
     const studentFeatures = [

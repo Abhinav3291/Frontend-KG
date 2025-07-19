@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Section } from '../components/ui/section';
 import { Container } from '../components/ui/container';
-import { Briefcase, Target, Users } from 'lucide-react';
+import { Briefcase, Target } from 'lucide-react';
 import IndustoryNetwork from '../components/IndustoryNetwork';
 import TechnicalHead from '../components/ui/TechnicalHead';
 
