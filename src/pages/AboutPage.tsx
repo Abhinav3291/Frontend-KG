@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { Section } from '../components/ui/section';
 import { Container } from '../components/ui/container';
 import { Briefcase, Target } from 'lucide-react';
-import IndustoryNetwork from '../components/IndustoryNetwork';
+import IndustryNetwork from '../components/IndustoryNetwork';
 import TechnicalHead from '../components/ui/TechnicalHead';
 
 const AboutPage = () => {
@@ -12,7 +12,7 @@ const AboutPage = () => {
   };
 
   return (
-    <Section className="bg-gray-50 ">
+    <Section className="bg-gray-50 mb-10">
       <Container>
         <motion.div
           className="text-center max-w-4xl mx-auto mb-16 -mt-16"
@@ -20,7 +20,7 @@ const AboutPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+          <h1 className="text-4xl mt-2 md:text-5xl font-bold text-gray-800 mb-4">
             About Us
           </h1>
           <p className="text-lg text-gray-600 leading-relaxed">
@@ -68,7 +68,7 @@ const AboutPage = () => {
 
         <div className='mt-5'>
           <TechnicalHead />
-          <IndustoryNetwork />
+          <IndustryNetwork />
         </div>
 
       </Container>

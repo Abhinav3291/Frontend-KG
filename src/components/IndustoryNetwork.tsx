@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
-import { Section } from './ui/section';
-import { Container } from './ui/container';
+
 import { Building2, Award, Star, TrendingUp } from 'lucide-react';
 
 const networkData = [
@@ -149,7 +148,7 @@ const IndustryNetwork = () => {
     };
 
     return (
-        <Section className="relative bg-gradient-to-br from-gray-50 via-white to-blue-50 py-20 overflow-hidden -mb-16">
+        <div className="relative bg-gradient-to-br from-gray-50 via-white to-blue-50 py-20 overflow-hidden -mb-16">
             {/* Background Decorations */}
             <div className="absolute inset-0 overflow-hidden">
                 <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-400/10 rounded-full blur-3xl"></div>
@@ -157,7 +156,7 @@ const IndustryNetwork = () => {
                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-blue-400/5 to-purple-400/5 rounded-full blur-3xl"></div>
             </div>
 
-            <Container className="relative z-10">
+            <div className="relative z-10">
                 <motion.div
                     variants={containerVariants}
                     initial="hidden"
@@ -194,8 +193,8 @@ const IndustryNetwork = () => {
                         ))}
                     </motion.div>
                 </motion.div>
-            </Container>
-        </Section>
+            </div>
+        </div>
     );
 };
 

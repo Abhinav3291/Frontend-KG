@@ -1,9 +1,6 @@
 import React from 'react';
 import '../../styles/CourseSales.css';
 
-import { Section } from '../ui/section';
-import { Container } from '../ui/container';
-import { cn } from '../../lib/utils';
 import { Linkedin, Twitter, Mail } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -57,8 +54,8 @@ const TechnicalHead = () => {
     ];
 
     return (
-        <Section className={cn('bg-gray-50 -mb-16')}>
-            <Container>
+        <div className='bg-gray-50 -mb-16 '>
+            <div className="w-[100%] mt-16">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                     {/* Instructor Image */}
                     <motion.div
@@ -71,7 +68,7 @@ const TechnicalHead = () => {
                         <h2 className="sm:block md:hidden text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                             Meet Our {role}
                         </h2>
-                        <div className="relative aspect-square rounded-2xl overflow-hidden shadow-xl">
+                        <div className="relative aspect-square rounded-2xl overflow-hidden shadow-xl ml-7">
                             <img
                                 src={image.src}
                                 alt={image.alt}
@@ -125,8 +122,8 @@ const TechnicalHead = () => {
                         </div>
                     </motion.div>
                 </div>
-            </Container>
-        </Section>
+            </div>
+        </div>
     );
 };
 
