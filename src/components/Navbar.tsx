@@ -30,10 +30,10 @@ const Navbar = () => {
             className="w-14 h-14 object-cover rounded-md"
           />
           <div className="leading-snug">
-            <h1 className="text-lg sm:text-xl font-bold text-blue-900 mb-0 mt-2">
+            <h1 className="text-lg sm:text-xl font-bold text-blue-950 mb-0 mt-2">
               KG Training & Placements
             </h1>
-            <p className="text-xs sm:text-sm italic text-blue-900 mt-0">
+            <p className="text-xs sm:text-sm italic text-blue-950 mt-0">
               Banking Education Redefined
             </p>
           </div>

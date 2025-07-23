@@ -59,9 +59,9 @@ const InstructorSection = () => {
   ];
 
   return (
-    <Section className={cn('bg-gray-50 -mb-16')}>
+    <Section className={cn('bg-gray-50 -mb-16 -mt-16')}>
       <Container>
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div className="h-full w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Instructor Image */}
           <motion.div
             className="lg:col-span-5 relative group"

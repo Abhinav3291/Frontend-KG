@@ -33,9 +33,9 @@ const WhyKgPage = () => {
         },
         {
             icon: <Award className="w-8 h-8 text-blue-500" />,
-            title: 'Certified Program',
+            title: 'Network',
             description:
-                'Get a recognized KG training certificate that boosts your profile and resume significantly.',
+                'We promise to help the student for building industry network by our experts lectures scheme',
             border: 'border-blue-400',
         },
     ];

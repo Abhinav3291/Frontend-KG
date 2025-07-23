@@ -23,7 +23,7 @@ export default function Hero(): JSX.Element {
     {
       title: 'First time in India',
       subtitle: 'Banking Education with 100% Placement Assurance.',
-      image: 'https://thumbs.dreamstime.com/b/rear-view-female-university-graduate-stands-holds-degree-certificate-to-celebrate-graduation-ceremony-clear-151371118.jpg',
+      image: './student_corporate_bridge.png',
       features: [
         '100% Placement Assurance',
         'Industry Expert Trainers',
@@ -34,7 +34,7 @@ export default function Hero(): JSX.Element {
     {
       title: 'Lectures by Industry Leaders',
       subtitle: 'Weekend sessions by experienced bankers covering practical aspects and career growth.',
-      image: 'https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=800&q=80',
+      image: './student_corporate_bridge.png',
       features: [
         '1-hour weekend sessions',
         'Corporate survival strategies',
@@ -43,20 +43,9 @@ export default function Hero(): JSX.Element {
       ],
     },
     {
-      title: 'Case Studies Session',
-      subtitle: 'Expand conceptual and contextual knowledge with weekly case studies.',
-      image: 'https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=800&q=80',
-      features: [
-        'Fintech policy & advancements',
-        'Banking software exposure (Finnone, Salesforce)',
-        'Effective learning strategies',
-        'Practical application discussions',
-      ],
-    },
-    {
       title: 'Resume Building & GD Prep',
       subtitle: 'Job finding strategies, sample interviews, and group discussion preparation.',
-      image: 'https://images.unsplash.com/photo-1515168833906-d2a3b82b302c?auto=format&fit=crop&w=800&q=80',
+      image: './student_corporate_bridge.png',
       features: [
         'Resume building workshops',
         'Sample interviews',
@@ -67,7 +56,7 @@ export default function Hero(): JSX.Element {
     {
       title: 'Training by ex-bankers',
       subtitle: 'Skilled and qualified ex-bankers help students understand real industry requirements.',
-      image: 'https://images.unsplash.com/photo-1606761568499-6d2451b23c66?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80',
+      image: './student_corporate_bridge.png',
       features: [
         'Ex-Banker Trainers',
         'Real-world Case Studies',
@@ -75,6 +64,18 @@ export default function Hero(): JSX.Element {
         'Practical Training',
       ],
     },
+    {
+      title: 'Case Studies Session',
+      subtitle: 'Expand conceptual and contextual knowledge with weekly case studies.',
+      image: './student_corporate_bridge.png',
+      features: [
+        'Fintech policy & advancements',
+        'Effective learning strategies',
+        'Practical application discussions',
+        'Banking software exposure',
+        'Eg: Finnone, Salesforce'
+      ],
+    }
   ];
 
   // Next / Prev slide
@@ -90,11 +91,11 @@ export default function Hero(): JSX.Element {
   };
 
   return (
-    <div className="-mt-16 -mb-16 min-h-screen bg-black text-white ">
+    <div className="-mt-16 -mb-16 min-h-[50vh] lg:min-h-screen bg-black text-white ">
 
 
       {/* HERO SLIDER */}
-      <section id="home" className=" h-screen overflow-hidden">
+      <section id="home" className=" h-[50vh] lg:h-screen overflow-hidden">
         {slides.map((slide: Slide, index: number) => (
           <div
             key={index}
@@ -106,21 +107,22 @@ export default function Hero(): JSX.Element {
               backgroundImage: `url(${slide.image})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
+              minHeight: "50vh"
             }}
           >
             {/* Responsive overlay: darker on mobile, lighter on desktop */}
-            <div className="absolute inset-0 bg-black opacity-90 md:opacity-80 lg:opacity-70"></div>
+            <div className="absolute inset-0 bg-blue-950 opacity-70 md:opacity-70 lg:opacity-70"></div>
             <div className="relative z-20 max-w-xl">
               <p className="text-amber-500 text-sm sm:text-lg mb-2">
                 {slide.subtitle}
               </p>
-              <h1 className="text-3xl sm:text-5xl font-bold mb-4 text-white">
+              <h1 className="text-3xl sm:text-5xl font-bold mb-10 text-white">
                 {slide.title}
               </h1>
               {/* Features List */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+              <div className="pt-16 grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {slide.features.map((feature, idx) => (
-                  <div key={idx} className="flex items-center">
+                  <div key={idx} className="flex items-center pl-5">
                     <span className="inline-block bg-blue-100 p-1 rounded-full mr-3">
                       <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
                     </span>

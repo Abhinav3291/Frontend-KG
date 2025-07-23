@@ -37,7 +37,7 @@ const socialIcons: Record<string, React.ReactNode> = {
 
 const TechnicalHead = () => {
     const name = 'Gaurav Garg';
-    const role = 'Technical Head';
+    const role = 'Training Head';
     const bio = [
         'Gaurav Garg, an ambitious man who loves to teach and learn.Post Graduate Diploma holder in Marketing and Data Analytics from XIME Bangalore, India.An attendee of Design Thinking course at Audencia Business School, Paris.Vast experience of 5+ years in Core Banking Sales.'
     ];
@@ -68,7 +68,7 @@ const TechnicalHead = () => {
                         <h2 className="sm:block md:hidden text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                             Meet Our {role}
                         </h2>
-                        <div className="relative aspect-square rounded-2xl overflow-hidden shadow-xl ml-7">
+                        <div className="relative h-full w-full  rounded-2xl overflow-hidden shadow-xl">
                             <img
                                 src={image.src}
                                 alt={image.alt}

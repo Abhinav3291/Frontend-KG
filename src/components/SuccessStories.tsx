@@ -56,7 +56,7 @@ const SuccessStoryCard = ({ story, index }: { story: typeof successStoriesData[0
 
 const SuccessStories = () => {
     return (
-        <Section className="bg-white py-16 overflow-hidden">
+        <Section className="bg-white py-16 overflow-hidden -mb-10">
             <Container>
                 <motion.h2
                     className="text-4xl font-bold text-center text-[#004449] mb-12"
