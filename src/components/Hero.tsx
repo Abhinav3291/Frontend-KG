@@ -23,7 +23,7 @@ export default function Hero(): JSX.Element {
     {
       title: 'First time in India',
       subtitle: 'Banking Education with 100% Placement Assurance.',
-      image: './student_corporate_bridge.png',
+      image: './hero_bg.jpg',
       features: [
         '100% Placement Assurance',
         'Industry Expert Trainers',
@@ -34,7 +34,7 @@ export default function Hero(): JSX.Element {
     {
       title: 'Lectures by Industry Leaders',
       subtitle: 'Weekend sessions by experienced bankers covering practical aspects and career growth.',
-      image: './student_corporate_bridge.png',
+      image: './hero_bg.jpg',
       features: [
         '1-hour weekend sessions',
         'Corporate survival strategies',
@@ -45,7 +45,7 @@ export default function Hero(): JSX.Element {
     {
       title: 'Resume Building & GD Prep',
       subtitle: 'Job finding strategies, sample interviews, and group discussion preparation.',
-      image: './student_corporate_bridge.png',
+      image: './hero_bg.jpg',
       features: [
         'Resume building workshops',
         'Sample interviews',
@@ -56,7 +56,7 @@ export default function Hero(): JSX.Element {
     {
       title: 'Training by ex-bankers',
       subtitle: 'Skilled and qualified ex-bankers help students understand real industry requirements.',
-      image: './student_corporate_bridge.png',
+      image: './hero_bg.jpg',
       features: [
         'Ex-Banker Trainers',
         'Real-world Case Studies',
@@ -67,7 +67,7 @@ export default function Hero(): JSX.Element {
     {
       title: 'Case Studies Session',
       subtitle: 'Expand conceptual and contextual knowledge with weekly case studies.',
-      image: './student_corporate_bridge.png',
+      image: './hero_bg.jpg',
       features: [
         'Fintech policy & advancements',
         'Effective learning strategies',
@@ -99,24 +99,26 @@ export default function Hero(): JSX.Element {
         {slides.map((slide: Slide, index: number) => (
           <div
             key={index}
-            className={`absolute inset-0 flex flex-col items-center justify-center px-4 text-center transition-opacity duration-1000 ease-in-out ${index === currentSlide
-              ? "opacity-100 z-10"
+            className={`absolute -inset-0 flex flex-col items-center justify-center text-center transition-opacity duration-1000 ease-in-out ${index === currentSlide
+              ? "opacity-100 z-10 rounded-none"
               : "opacity-0 z-0 pointer-events-none"
               }`}
             style={{
               backgroundImage: `url(${slide.image})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
-              minHeight: "50vh"
+              backgroundRepeat: "no-repeat",
+              minHeight: "50vh",
+              borderRadius: "0px"
             }}
           >
             {/* Responsive overlay: darker on mobile, lighter on desktop */}
-            <div className="absolute inset-0 bg-blue-950 opacity-70 md:opacity-70 lg:opacity-70"></div>
+            <div className="absolute inset-0 bg-black opacity-50"></div>
             <div className="relative z-20 max-w-xl">
-              <p className="text-amber-500 text-sm sm:text-lg mb-2">
+              <p className="text-white text-sm sm:text-lg">
                 {slide.subtitle}
               </p>
-              <h1 className="text-3xl sm:text-5xl font-bold mb-10 text-white">
+              <h1 className="text-3xl sm:text-5xl font-bold text-white">
                 {slide.title}
               </h1>
               {/* Features List */}
@@ -132,7 +134,7 @@ export default function Hero(): JSX.Element {
               </div>
               <button
                 onClick={handleViewBrochure}
-                className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded-md transition"
+                className="mt-5 bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded-md transition"
               >
                 View Brochure
               </button>
@@ -163,7 +165,7 @@ export default function Hero(): JSX.Element {
               key={idx}
               onClick={() => setCurrentSlide(idx)}
               className={`w-3 h-3 rounded-full ${idx === currentSlide
-                ? "bg-amber-500"
+                ? "bg-white"
                 : "bg-white bg-opacity-50"
                 }`}
               aria-label={`Go to slide ${idx + 1}`}
