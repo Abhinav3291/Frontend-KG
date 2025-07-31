@@ -1,7 +1,7 @@
 import axios from 'axios';
 import type { AxiosError, AxiosResponse, AxiosRequestConfig } from 'axios';
 
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = 'https://kgtrainingandplacements.in/api';
 
 // Create an axios instance with default config
 const apiClient = axios.create({
