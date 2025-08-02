@@ -2,8 +2,6 @@ import { useState, type JSX } from "react";
 import {
   ChevronLeft,
   ChevronRight,
-
-
 } from "lucide-react";
 
 // TypeScript interfaces
@@ -15,9 +13,7 @@ interface Slide {
 }
 
 export default function Hero(): JSX.Element {
-
   const [currentSlide, setCurrentSlide] = useState<number>(0);
-
 
   const slides: Slide[] = [
     {
@@ -92,16 +88,14 @@ export default function Hero(): JSX.Element {
 
   return (
     <div className="-mt-16 -mb-16 min-h-[50vh] lg:min-h-screen bg-black text-white ">
-
-
       {/* HERO SLIDER */}
-      <section id="home" className=" h-[50vh] lg:h-screen overflow-hidden">
+      <section id="home" className="h-[50vh] lg:h-screen overflow-hidden">
         {slides.map((slide: Slide, index: number) => (
           <div
             key={index}
             className={`absolute -inset-0 flex flex-col items-center justify-center text-center transition-opacity duration-1000 ease-in-out ${index === currentSlide
-              ? "opacity-100 z-10 rounded-none"
-              : "opacity-0 z-0 pointer-events-none"
+                ? "opacity-100 z-10 rounded-none"
+                : "opacity-0 z-0 pointer-events-none"
               }`}
             style={{
               backgroundImage: `url(${slide.image})`,
@@ -114,11 +108,12 @@ export default function Hero(): JSX.Element {
           >
             {/* Responsive overlay: darker on mobile, lighter on desktop */}
             <div className="absolute inset-0 bg-black opacity-50"></div>
-            <div className="relative z-20 max-w-xl">
+            {/* ADDED px-4 FOR MOBILE PADDING */}
+            <div className="relative z-20 max-w-xl px-4">
               <p className="text-white text-sm sm:text-lg">
                 {slide.subtitle}
               </p>
-              <h1 className="text-3xl sm:text-5xl font-bold text-white">
+              <h1 className="text-2xl sm:text-5xl font-bold text-white"> {/* ADJUSTED TEXT SIZE FOR MOBILE */}
                 {slide.title}
               </h1>
               {/* Features List */}
@@ -141,7 +136,6 @@ export default function Hero(): JSX.Element {
             </div>
           </div>
         ))}
-
         {/* Prev / Next Arrows */}
         <button
           onClick={prevSlide}
@@ -165,8 +159,8 @@ export default function Hero(): JSX.Element {
               key={idx}
               onClick={() => setCurrentSlide(idx)}
               className={`w-3 h-3 rounded-full ${idx === currentSlide
-                ? "bg-white"
-                : "bg-white bg-opacity-50"
+                  ? "bg-white"
+                  : "bg-white bg-opacity-50"
                 }`}
               aria-label={`Go to slide ${idx + 1}`}
             />
