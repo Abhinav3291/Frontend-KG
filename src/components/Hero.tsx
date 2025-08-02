@@ -18,7 +18,7 @@ export default function Hero(): JSX.Element {
   const slides: Slide[] = [
     {
       title: 'First time in India',
-      subtitle: 'Banking Education with 100% Placement Assurance.',
+      subtitle: '',
       image: './hero_bg.jpg',
       features: [
         '100% Placement Assurance',
@@ -29,7 +29,7 @@ export default function Hero(): JSX.Element {
     },
     {
       title: 'Lectures by Industry Leaders',
-      subtitle: 'Weekend sessions by experienced bankers covering practical aspects and career growth.',
+      subtitle: '',
       image: './hero_bg.jpg',
       features: [
         '1-hour weekend sessions',
@@ -40,7 +40,7 @@ export default function Hero(): JSX.Element {
     },
     {
       title: 'Resume Building & GD Prep',
-      subtitle: 'Job finding strategies, sample interviews, and group discussion preparation.',
+      subtitle: '',
       image: './hero_bg.jpg',
       features: [
         'Resume building workshops',
@@ -51,7 +51,7 @@ export default function Hero(): JSX.Element {
     },
     {
       title: 'Training by ex-bankers',
-      subtitle: 'Skilled and qualified ex-bankers help students understand real industry requirements.',
+      subtitle: '',
       image: './hero_bg.jpg',
       features: [
         'Ex-Banker Trainers',
@@ -62,7 +62,7 @@ export default function Hero(): JSX.Element {
     },
     {
       title: 'Case Studies Session',
-      subtitle: 'Expand conceptual and contextual knowledge with weekly case studies.',
+      subtitle: '',
       image: './hero_bg.jpg',
       features: [
         'Fintech policy & advancements',
