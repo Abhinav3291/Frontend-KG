@@ -88,7 +88,7 @@ export default function Hero(): JSX.Element {
 
     {
 
-      title: '',
+      title: 'Resume Building & GD Prep',
 
       subtitle: '',
 
