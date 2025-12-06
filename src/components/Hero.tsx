@@ -1,355 +1,197 @@
-import { useState, type JSX } from "react";
+import { useRef, useState, useLayoutEffect } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
-import {
-
-  ChevronLeft,
-
-  ChevronRight,
-
-
-
-
-
-} from "lucide-react";
-
-
-
-// TypeScript interfaces
-
-interface Slide {
-
-  title: string;
-
-  subtitle: string;
-
-  image: string;
-
-  features: string[];
-
+interface Card {
+  title: string;
+  subtitle: string;
+  buttonText: string;
+  bgColor: string;
+  image?: string;
+  logos?: string[];
 }
 
-
-
-export default function Hero(): JSX.Element {
-
-
-
-  const [currentSlide, setCurrentSlide] = useState<number>(0);
-
-
-
-
-
-  const slides: Slide[] = [
-
-    {
-
-      title: 'First time in India',
-
-      subtitle: '',
-
-      image: './hero_bg.jpg',
-
-      features: [
-
-        '100% Placement Assurance',
-
-        'Industry Expert Trainers',
-
-        'Banking-Focused Curriculum',
-
-        'Certification Programs',
-
-      ],
-
-    },
-
-    {
-
-      title: 'Lectures by Industry Leaders',
-
-      subtitle: '',
-
-      image: './hero_bg.jpg',
-
-      features: [
-
-        '1-hour weekend sessions',
-
-        'Corporate survival strategies',
-
-        'Do’s and don’ts for clients & organization',
-
-        'How to achieve targets & get promoted',
-
-      ],
-
-    },
-
-    {
-
-      title: 'Resume Building & GD Prep',
-
-      subtitle: '',
-
-      image: './hero_bg.jpg',
-
-      features: [
-
-        'Resume building workshops',
-
-        'Sample interviews',
-
-        'GD (Group Discussion) preparation',
-
-        'Job search strategies',
-
-      ],
-
-    },
-
-    {
-
-      title: 'Training by ex-bankers',
-
-      subtitle: '',
-
-      image: './hero_bg.jpg',
-
-      features: [
-
-        'Ex-Banker Trainers',
-
-        'Real-world Case Studies',
-
-        'Industry Insights',
-
-        'Practical Training',
-
-      ],
-
-    },
-
-    {
-
-      title: 'Case Studies Session',
-
-      subtitle: '',
-
-      image: './hero_bg.jpg',
-
-      features: [
-
-        'Fintech policy & advancements',
-
-        'Effective learning strategies',
-
-        'Practical application discussions',
-
-        'Banking software exposure',
-
-        'Eg: Finnone, Salesforce'
-
-      ],
-
-    }
-
-  ];
-
-
-
-  // Next / Prev slide
-
-  const nextSlide = (): void =>
-
-    setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
-
-  const prevSlide = (): void =>
-
-    setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
-
-
-
-  // Handle brochure download/view
-
-  const handleViewBrochure = (): void => {
-
-    const brochureUrl = '/files/kg_broucher.pdf';
-
-    window.open(brochureUrl, '_blank', 'noopener,noreferrer');
-
-  };
-
-
-
-  return (
-
-    <div className="-mt-16 -mb-16 min-h-[50vh] lg:min-h-screen bg-black text-white ">
-
-
-
-
-
-      {/* HERO SLIDER */}
-
-      <section id="home" className=" h-[50vh] lg:h-screen overflow-hidden">
-
-        {slides.map((slide: Slide, index: number) => (
-
-          <div
-
-            key={index}
-
-            className={`absolute -inset-0 flex flex-col items-center justify-center text-center transition-opacity duration-1000 ease-in-out ${index === currentSlide
-
-              ? "opacity-100 z-10 rounded-none"
-
-              : "opacity-0 z-0 pointer-events-none"
-
-              }`}
-
-            style={{
-
-              backgroundImage: `url(${slide.image})`,
-
-              backgroundSize: "cover",
-
-              backgroundPosition: "center",
-
-              backgroundRepeat: "no-repeat",
-
-              minHeight: "50vh",
-
-              borderRadius: "0px"
-
-            }}
-
-          >
-
-            {/* Responsive overlay: darker on mobile, lighter on desktop */}
-
-            <div className="absolute inset-0 bg-black opacity-50"></div>
-
-            <div className="relative z-20 max-w-xl">
-
-              <p className="text-white text-sm sm:text-lg">
-
-                {slide.subtitle}
-
-              </p>
-
-              <h1 className="text-3xl sm:text-5xl font-bold text-white">
-
-                {slide.title}
-
-              </h1>
-
-              {/* Features List */}
-
-              <div className="pt-16 grid grid-cols-1 sm:grid-cols-2 gap-3">
-
-                {slide.features.map((feature, idx) => (
-
-                  <div key={idx} className="flex items-center pl-5">
-
-                    <span className="inline-block bg-blue-100 p-1 rounded-full mr-3">
-
-                      <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
-
-                    </span>
-
-                    <span className="text-white">{feature}</span>
-
-                  </div>
-
-                ))}
-
-              </div>
-
-              <button
-
-                onClick={handleViewBrochure}
-
-                className="mt-5 bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded-md transition"
-
-              >
-
-                View Brochure
-
-              </button>
-
-            </div>
-
-          </div>
-
-        ))}
-
-
-
-        {/* Prev / Next Arrows */}
-
-        <button
-
-          onClick={prevSlide}
-
-          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-80 p-2 rounded-full z-30"
-
-          aria-label="Previous slide"
-
-        >
-
-          <ChevronLeft size={24} />
-
-        </button>
-
-        <button
-
-          onClick={nextSlide}
-
-          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-80 p-2 rounded-full z-30"
-
-          aria-label="Next slide"
-
-        >
-
-          <ChevronRight size={24} />
-
-        </button>
-
-
-
-        {/* Dots */}
-
-        <div className="absolute bottom-6 w-full flex justify-center gap-2 z-30">
-
-          {slides.map((_: Slide, idx: number) => (
-
-            <button
-
-              key={idx}
-
-              onClick={() => setCurrentSlide(idx)}
-
-              className={`w-3 h-3 rounded-full ${idx === currentSlide
-
-                ? "bg-white"
-
-                : "bg-white bg-opacity-50"
-
-                }`}
-
-              aria-label={`Go to slide ${idx + 1}`}
-
-            />
-
-          ))}
-
-        </div>
-
-      </section>
-
-    </div>
-
-  );
-
+export default function Hero() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [slideWidth, setSlideWidth] = useState(0);
+  const [maxScroll, setMaxScroll] = useState(0);
+
+  const cards: Card[] = [
+  {
+    title: "Banking Career Readiness",
+    subtitle:
+      "Master essential skills, certifications, and interview preparation to secure jobs in public and private sector banks.",
+    buttonText: "Explore Banking Careers",
+    bgColor: "bg-[#E8F1FF]",
+    image: "/images/hero/kg_t_and_p_1.png"
+  },
+  {
+    title: "Banking Partner Program",
+    subtitle:
+      "Build entrepreneurial skills to become an authorized Banking Partner and launch your own financial services venture.",
+    buttonText: "Start Your Venture",
+    bgColor: "bg-[#FFF1E6]",
+    image:"/images/hero/handshake.png"
+  },
+  {
+    title: "Financial & Policy Advisory Track",
+    subtitle:
+      "Develop expertise to work as a financial consultant or government policy advisor, supporting individuals and institutions with informed decision-making.",
+    buttonText: "Become an Advisor",
+    bgColor: "bg-[#add6f7]",
+    image:"/images/hero/policy.png",
+  },
+  {
+    title: "Wealth Creation &Investment Mastery",
+    subtitle:
+      "Learn fundamental and technical analysis to confidently analyze stocks, invest smartly, and pursue careers in trading and market research.",
+    buttonText: "Learn Stock Market",
+    bgColor: "bg-[#E7DDD6]",
+    image:"/images/hero/stock.jpg", 
+  },
+];
+
+
+
+  const calculateViews = () => {
+    if (window.innerWidth < 640) return 1;
+    if (window.innerWidth < 1024) return 1.35;
+    return 1.75; // desktop
+  };
+
+  useLayoutEffect(() => {
+    const measure = () => {
+      if (!containerRef.current || !trackRef.current) return;
+
+      const containerWidth = containerRef.current.offsetWidth;
+      const cardsPerView = calculateViews();
+      const cardWidth = containerWidth / cardsPerView;
+
+      setSlideWidth(cardWidth);
+
+      const totalTrackWidth =
+        cards.length * cardWidth + (cards.length - 1) * 24; // gap = 24px
+
+      const maxScrollDistance = Math.max(
+        0,
+        totalTrackWidth - containerWidth
+      );
+
+      setMaxScroll(maxScrollDistance);
+    };
+
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, [cards.length]);
+
+  const gap = 24;
+
+  // ✅ Calculated scroll (CLAMPED — never overshoot)
+  const translateX = Math.min(
+    currentIndex * (slideWidth + gap),
+    maxScroll
+  );
+
+  const scrollLeft = () => {
+    setCurrentIndex((x) => Math.max(0, x - 1));
+  };
+
+  const scrollRight = () => {
+    if (translateX < maxScroll) {
+      setCurrentIndex((x) => x + 1);
+    }
+  };
+
+  return (
+    <section className="bg-white pt-10 pb-4 px-4">
+      <div
+        ref={containerRef}
+        className="max-w-7xl relative px-4 sm:px-6 overflow-hidden"
+      >
+        {/* TRACK */}
+        <div
+          ref={trackRef}
+          className="flex gap-6 transition-transform duration-500 ease-in-out"
+          style={{
+            transform: `translateX(-${translateX}px)`,
+          }}
+        >
+          {cards.map((card, i) => (
+            <div
+              key={i}
+              style={{ width: `${slideWidth}px` }}
+              className="shrink-0 "
+            >
+              <div
+                className={`${card.bgColor}
+                rounded-3xl
+                h-[280px] sm:h-[320px] lg:h-[340px]
+                p-6 sm:p-8 lg:p-10
+                flex relative overflow-hidden shadow-sm ${i === cards.length - 1 ? 'mr-10' : ''}`}
+              >
+                <div className="w-1/2 z-10 flex flex-col justify-center">
+                  <h2 className="text-xl sm:text-2xl lg:text-[32px] font-bold text-gray-900 mb-3">
+                    {card.title}
+                  </h2>
+
+                  <p className="text-sm sm:text-base lg:text-lg mb-5 sm:mb-6 text-gray-700 max-w-md">
+                    {card.subtitle}
+                  </p>
+
+                  {/* <button className="bg-[#0056d2] hover:bg-[#0045a3] text-white px-6 py-3 rounded-xl font-semibold w-fit">
+                    {card.buttonText} →
+                  </button> */}
+
+                  {card.logos && (
+                    <div className="flex gap-4 mt-6">
+                      {card.logos.map((logo, idx) => (
+                        <div
+                          key={idx}
+                          className="w-10 h-10 bg-white rounded-full shadow border flex items-center justify-center"
+                        >
+                          <img src={logo} className="w-6 object-contain" />
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                <div className="absolute right-0 top-0 h-full w-1/2">
+                  <img
+                    src={card.image}
+                    className="w-full h-full object-cover rounded-l-[80px] lg:rounded-l-[120px]"
+                  />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* LEFT BUTTON */}
+        <button
+          onClick={scrollLeft}
+          disabled={currentIndex === 0}
+          className="absolute left-2 top-1/2 -translate-y-1/2 p-3
+            bg-white border border-black rounded-full text-black shadow
+            disabled:opacity-40"
+        >
+          <ChevronLeft />
+        </button>
+
+        {/* RIGHT BUTTON */}
+        <button
+          onClick={scrollRight}
+          disabled={translateX >= maxScroll}
+          className="absolute right-2 top-1/2 -translate-y-1/2 p-3
+            bg-white border border-black rounded-full text-black shadow
+            disabled:opacity-40"
+        >
+          <ChevronRight />
+        </button>
+      </div>
+    </section>
+  );
 }

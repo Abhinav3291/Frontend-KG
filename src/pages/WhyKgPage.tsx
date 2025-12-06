@@ -67,7 +67,7 @@ const WhyKgPage = () => {
     const features = activeTab === 'students' ? studentFeatures : corporateFeatures;
 
     return (
-        <div className="bg-white text-center py-16">
+        <div className="bg-white text-center py-16 mt-16">
             <Container>
                 {/* Title and Description */}
                 <h1 className="text-4xl font-bold text-gray-900 mb-4">WHY KG?</h1>

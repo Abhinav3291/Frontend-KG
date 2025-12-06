@@ -42,9 +42,7 @@ const InstructorSection = () => {
   const name = 'Sukhpreet Singh';
   const role = 'COO';
   const bio = [
-    'Visionary leader with a Masters in Commerce from Malwa region, whose mission is to serve society through education and empowerment.',
-    `Hailing from the small village of Rai Khana in Bathinda, ${name} brings a unique perspective to educational leadership.`,
-    'His vision is to empower individuals through quality education, helping them become self-reliant and support their families while providing skilled professionals to the corporate world.'
+    'Visionary leader with a Masters in Commerce from Malwa region, whose mission is to serve society through education and empowerment. His vision is to empower individuals through quality education, helping them become self-reliant and support their families while providing skilled professionals to the corporate world.'
   ];
   const image = {
     src: '/WhatsApp Image 2025-07-14 at 13.05.02_8c9a4306.jpg',
@@ -59,7 +57,7 @@ const InstructorSection = () => {
   ];
 
   return (
-    <Section className={cn('bg-gray-50 -mb-16 -mt-16')}>
+    <Section className={cn('bg-gray-50 -mb-16 -mt-16 mb-16')}>
       <Container>
         <div className="h-full w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Instructor Image */}
@@ -73,11 +71,11 @@ const InstructorSection = () => {
             <h2 className="sm:block md:hidden text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Meet Our {role.split(' ').pop()}
             </h2>
-            <div className="relative aspect-square rounded-2xl overflow-hidden shadow-xl">
+            <div className="w-32 h-32 relative aspect-square rounded-2xl overflow-hidden shadow-xl">
               <img
                 src={image.src}
                 alt={image.alt}
-                className="w-auto h-auto object-fit transition-transform duration-500 group-hover:scale-105"
+                className="w-full h-full object-fit transition-transform duration-500 group-hover:scale-105"
                 loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
@@ -111,7 +109,7 @@ const InstructorSection = () => {
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <div className="max-w-3xl">
+            <div className="max-w-3xl h-auto">
               <h2 className="hidden sm:block text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                 Meet Our {role.split(' ').pop()}
               </h2>

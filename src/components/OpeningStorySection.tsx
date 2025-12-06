@@ -37,7 +37,7 @@ const OpeningStorySection = () => {
   };
 
   return (
-    <Section className={cn('bg-white')}>
+    <Section className={cn('bg-white mt-2')}>
       <Container>
         <div className="h-full w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Video Section */}

@@ -5,7 +5,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
           {/* Company Info */}
           <div>
-            <h3 className="text-xl sm:text-2xl font-bold mb-6">KG Training & Placements</h3>
+            <h3 className="text-xl sm:text-2xl font-bold mb-6 text-white">KG Training & Placements</h3>
             <p className="text-gray-400 mb-6">
               Empowering professionals through quality education and placement opportunities.
             </p>
@@ -30,7 +30,7 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-xl sm:text-2xl font-bold mb-6">Quick Links</h3>
+            <h3 className="text-xl sm:text-2xl font-bold mb-6 text-white">Quick Links</h3>
             <ul className="space-y-3">
               <li><a href="/" className="text-gray-400 hover:text-white transition-colors">Home</a></li>
               <li><a href="/courses" className="text-gray-400 hover:text-white transition-colors">Courses</a></li>
@@ -41,7 +41,7 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <h3 className="text-xl sm:text-2xl font-bold mb-6">Contact Us</h3>
+            <h3 className="text-xl sm:text-2xl font-bold mb-6 text-white">Contact Us</h3>
             <div className="space-y-4">
               <div className="flex items-start">
                 <svg className="w-5 h-5 sm:w-6 sm:h-6 text-purple-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -60,14 +60,14 @@ const Footer = () => {
                 <svg className="w-5 h-5 sm:w-6 sm:h-6 text-purple-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
-                <p className="text-gray-400">kgbankingandfinance@gmail.com</p>
+                <p className="text-gray-400">kgtrainingandplacement@gmail.com</p>
               </div>
             </div>
           </div>
 
           {/* Newsletter */}
           <div>
-            <h3 className="text-xl sm:text-2xl font-bold mb-6">Newsletter</h3>
+            <h3 className="text-xl sm:text-2xl font-bold mb-6 text-white">Newsletter</h3>
             <p className="text-gray-400 mb-6">Stay updated with our latest courses and news.</p>
             <form className="flex flex-col gap-4">
               <input
