@@ -32,6 +32,11 @@ const partners = [
     name: 'Yes Bank',
     logo: '/images/partners/yes_bank_logo.png',
     alt: 'Yes Bank Logo'
+  },
+  {
+    name: 'Refinserv Pvt Ltd',
+    logo: '/images/partners/refinserv.png',
+    alt: 'Refinserv Logo'
   }
 ];
 

@@ -44,7 +44,7 @@ export default function Hero() {
     image:"/images/hero/policy.png",
   },
   {
-    title: "Wealth Creation &Investment Mastery",
+    title: "Wealth Creation & Investment Mastery",
     subtitle:
       "Learn fundamental and technical analysis to confidently analyze stocks, invest smartly, and pursue careers in trading and market research.",
     buttonText: "Learn Stock Market",

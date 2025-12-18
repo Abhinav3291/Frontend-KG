@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { Container } from './ui/container';
 import { Button } from './ui/button';
@@ -7,6 +7,8 @@ import { cn } from '../lib/utils';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const navLinks = [
     { name: 'Home', path: '/' },
@@ -15,8 +17,26 @@ const Navbar = () => {
     { name: 'Contact', path: '/contact' },
   ];
 
-  const location = useLocation();
   const isActive = (path: string) => location.pathname === path;
+
+  const scrollToRegistration = () => {
+    setIsOpen(false);
+    
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        const element = document.getElementById('registration-form');
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    } else {
+      const element = document.getElementById('registration-form');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
 
   return (
     <header className="bg-white shadow-sm top-0 z-50 fixed w-full ">
@@ -53,8 +73,8 @@ const Navbar = () => {
               {link.name}
             </Link>
           ))}
-          <Button className="ml-4">
-            Get Started
+          <Button className="ml-4" onClick={scrollToRegistration}>
+            Register now
           </Button>
         </nav>
 
@@ -85,8 +105,8 @@ const Navbar = () => {
             </Link>
           ))}
           <div className="pt-4 pb-2 border-t border-gray-200">
-            <Button className="w-full">
-              Get Started
+            <Button className="w-full" onClick={scrollToRegistration}>
+              Register now
             </Button>
           </div>
         </div>

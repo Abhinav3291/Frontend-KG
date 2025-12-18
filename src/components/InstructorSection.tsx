@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../styles/CourseSales.css';
 
 import { Section } from './ui/section';
@@ -38,6 +38,13 @@ const socialIcons: Record<string, React.ReactNode> = {
   email: <Mail className="w-5 h-5" />,
 };
 
+const instructorHighlights = [
+  '10+ Years of Banking Experience',
+  'Mentored 500+ Students',
+  'Specialist in Retail Banking & NBFC Roles',
+  'Expert in Career & Interview Guidance',
+];
+
 const InstructorSection = () => {
   const name = 'Sukhpreet Singh';
   const role = 'COO';
@@ -56,13 +63,35 @@ const InstructorSection = () => {
     },
   ];
 
+  // Auto-loop animation similar to Success Stories
+  useEffect(() => {
+    const keyframes = `
+      @keyframes slideInstructors {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+      }
+
+      .animate-instructors-slide {
+        animation: slideInstructors 22s linear infinite;
+      }
+    `;
+
+    const style = document.createElement('style');
+    style.textContent = keyframes;
+    document.head.appendChild(style);
+
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
+
   return (
     <Section className={cn('bg-gray-50 -mb-16 -mt-16 mb-16')}>
       <Container>
         <div className="h-full w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Instructor Image */}
           <motion.div
-            className="lg:col-span-5 relative group"
+            className="lg:col-span-5 relative group mx-auto"
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
@@ -71,7 +100,7 @@ const InstructorSection = () => {
             <h2 className="sm:block md:hidden text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Meet Our {role.split(' ').pop()}
             </h2>
-            <div className="w-32 h-32 relative aspect-square rounded-2xl overflow-hidden shadow-xl">
+            <div className="w-64 h-64 relative aspect-square rounded-2xl overflow-hidden shadow-xl">
               <img
                 src={image.src}
                 alt={image.alt}
@@ -113,15 +142,29 @@ const InstructorSection = () => {
               <h2 className="hidden sm:block text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                 Meet Our {role.split(' ').pop()}
               </h2>
-              <h3 className="text-xl text-blue-600 font-semibold mb-6">{name}</h3>
+              <h3 className="text-xl text-blue-600 font-semibold mb-4">{name}</h3>
 
-              <div className="space-y-4 text-gray-700 mb-8">
+              <div className="space-y-4 text-gray-700 mb-4">
                 {bio.map((paragraph, index) => (
                   <p key={index} className="leading-relaxed">
                     {paragraph}
                   </p>
                 ))}
               </div>
+
+              {/* Auto-loop highlight strip */}
+              {/* <div className="mt-3 overflow-hidden">
+                <div className="flex gap-4 animate-instructors-slide w-max">
+                  {[...instructorHighlights, ...instructorHighlights].map((highlight, index) => (
+                    <div
+                      key={`${highlight}-${index}`}
+                      className="px-4 py-2 rounded-full bg-blue-50 text-blue-700 text-sm font-medium shadow-sm whitespace-nowrap border border-blue-100"
+                    >
+                      {highlight}
+                    </div>
+                  ))}
+                </div>
+              </div> */}
             </div>
           </motion.div>
         </div>

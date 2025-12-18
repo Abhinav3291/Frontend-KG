@@ -1,79 +1,141 @@
 import { motion } from 'framer-motion';
 import { Section } from '../components/ui/section';
 import { Container } from '../components/ui/container';
-import { Briefcase, Target } from 'lucide-react';
-import IndustryNetwork from '../components/IndustoryNetwork';
-import TechnicalHead from '../components/ui/TechnicalHead';
+import { BookOpen, Users, Handshake } from 'lucide-react';
 
 const AboutPage = () => {
-  const cardVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-  };
-
   return (
-    <Section className="bg-gray-50 mb-10">
+    <Section className="bg-white py-20 md:py-28 text-gray-900 border-t border-gray-100">
       <Container>
-        <motion.div
-          className="text-center max-w-4xl mx-auto mb-16 -mt-16"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <h1 className="text-4xl mt-2 md:text-5xl font-bold text-gray-800 mb-4">
-            About Us
-          </h1>
-          <p className="text-lg text-gray-600 leading-relaxed">
-            <span className="font-bold text-blue-600">KG Training & Placements</span> is a premier institution dedicated to bridging the gap between students and the corporate world. We provide specialized training to equip aspiring professionals with the skills needed for the banking sector, while offering a streamlined talent pipeline for companies. Our platform emphasizes quality education, practical skills, and genuine placement support, making career advancement accessible and efficient.
-          </p>
-        </motion.div>
+        {/* --- Top Section: Company Profile --- */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 mb-20">
+          
+          {/* Left Column: Heading & Image */}
+          <div className="lg:col-span-5 flex flex-col gap-8">
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-4xl md:text-5xl font-bold leading-tight text-gray-900"
+            >
+              Building Careers, <br />
+              <span className="text-blue-600">Transforming Lives.</span>
+            </motion.h1>
 
-        {/* --- Vision & Mission Cards --- */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-          {/* Vision Card */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="relative w-full aspect-[4/3] bg-blue-50 overflow-hidden rounded-2xl shadow-lg"
+            >
+              <img 
+                src="/images/team.jpg" 
+                alt="KG Training Team"
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+              />
+               <div className="absolute inset-0 bg-blue-900/10 mix-blend-multiply" />
+            </motion.div>
+          </div>
+
+          {/* Right Column: About Text */}
+          <div className="lg:col-span-7 pt-4 lg:pt-10">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+            >
+              <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+                 <span className="w-8 h-1 bg-blue-600 rounded-full" />
+                 About KG Training & Placements
+              </h2>
+              
+              <div className="space-y-6 text-gray-600 text-lg leading-relaxed">
+                <p>
+                  <strong className="text-gray-900">KG Training & Placements</strong> is a premier institute dedicated to bridging the gap between ambitious students and the corporate banking world.
+                </p>
+                <p>
+                  We noticed a common problem: many students have degrees but lack the specific practical skills that banks and NBFCs are looking for. On the other side, companies struggle to find ready-to-work talent.
+                </p>
+                <p>
+                  That's where we come in. We offer specialized training programs designed by industry experts. We don't just teach theory; we prepare you for the real job. 
+                </p>
+                <p>
+                  From interview preparation to understanding core banking concepts, we are with you at every step. Our goal is to make sure every student we train walks into their interview with confidence and walks out with a job offer.
+                </p>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* --- Divider --- */}
+        <div className="w-full h-px bg-gray-100 mb-20" />
+
+        {/* --- Bottom Section: 3 Columns --- */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-12">
+          
+          {/* Column 1 */}
           <motion.div
-            className="bg-white p-8 rounded-2xl shadow-lg text-center"
-            variants={cardVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.5 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+            className="group relative p-6 -m-6 rounded-2xl transition-all duration-300 hover:bg-white hover:shadow-xl border border-transparent hover:border-blue-100"
           >
-            <div className="w-16 h-16 bg-blue-100 text-blue-600 flex items-center justify-center rounded-full mx-auto mb-4">
-              <Target className="w-8 h-8" />
+             <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-indigo-50/50 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10" />
+
+            <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-blue-700 mb-6 group-hover:scale-110 transition-transform duration-300 shadow-sm border border-blue-200">
+                <BookOpen className="w-6 h-6" />
             </div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-3">Our Vision</h3>
-            <p className="text-gray-700 text-lg">
-              We envision ourselves as a doorway to opportunities for students and a single-point solution for corporates to find perfect talent.
+            <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-700 transition-colors">Our Beginning</h3>
+            <p className="text-gray-600 leading-relaxed text-sm md:text-base">
+              We started recently with a clear focus: to fix the employment gap in the banking sector. What began as a small initiative has quickly grown into a trusted name for quality banking education.
             </p>
           </motion.div>
 
-          {/* Mission Card */}
+          {/* Column 2 */}
           <motion.div
-            className="bg-white p-8 rounded-2xl shadow-lg text-center"
-            variants={cardVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ delay: 0.2 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.5 }}
+            className="group relative p-6 -m-6 rounded-2xl transition-all duration-300 hover:bg-white hover:shadow-xl border border-transparent hover:border-blue-100"
           >
-            <div className="w-16 h-16 bg-green-100 text-green-600 flex items-center justify-center rounded-full mx-auto mb-4">
-              <Briefcase className="w-8 h-8" />
+             <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-indigo-50/50 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10" />
+
+            <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-blue-700 mb-6 group-hover:scale-110 transition-transform duration-300 shadow-sm border border-blue-200">
+                <Users className="w-6 h-6" />
             </div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-3">Our Mission</h3>
-            <p className="text-gray-700 text-lg">
-              To work as a bridge between students and corporates, ensuring companies get skilled talent while students secure promising careers with well-paying jobs.
+            <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-700 transition-colors">Our Vision</h3>
+            <p className="text-gray-600 leading-relaxed text-sm md:text-base">
+              To be the "Gateway to Success" for students. We envision a future where every motivated student has access to the right training and the right opportunities to build a stable career.
             </p>
           </motion.div>
-        </div>
 
-        <div className='mt-5'>
-          <TechnicalHead />
-          <IndustryNetwork />
-        </div>
+          {/* Column 3 */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.6 }}
+            className="group relative p-6 -m-6 rounded-2xl transition-all duration-300 hover:bg-white hover:shadow-xl border border-transparent hover:border-blue-100"
+          >
+             <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-indigo-50/50 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10" />
 
+            <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-blue-700 mb-6 group-hover:scale-110 transition-transform duration-300 shadow-sm border border-blue-200">
+                <Handshake className="w-6 h-6" />
+            </div>
+            <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-700 transition-colors">Our Promise</h3>
+            <p className="text-gray-600 leading-relaxed text-sm md:text-base">
+              We stick by our values of quality and honesty. We don't just provide courses; we provide careers. We promise to support our students until they achieve their professional goals.
+            </p>
+          </motion.div>
+
+        </div>
       </Container>
     </Section>
   );
 };
 
-export default AboutPage;
+export default AboutPage;;

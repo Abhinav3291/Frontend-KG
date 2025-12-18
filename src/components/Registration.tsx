@@ -162,7 +162,7 @@ const Registration = () => {
   };
 
   return (
-    <section className="py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 via-blue-50/30 to-gray-50 -mt-16">
+    <section  className="py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 via-blue-50/30 to-gray-50 -mt-16">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8 sm:mb-12">
@@ -175,7 +175,7 @@ const Registration = () => {
         </div>
 
         {/* Form Card */}
-        <div className="bg-white shadow-xl rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-2xl">
+        <div id="registration-form" className="bg-white shadow-xl rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-2xl">
           <div className="w-full p-6 sm:p-8 lg:p-10">
             <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
               {/* Name Field */}

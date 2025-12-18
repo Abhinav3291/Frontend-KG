@@ -122,6 +122,8 @@ const ContactPage: React.FC = () => {
         message: '',
         subject: 'General Inquiry'
       });
+
+      handleWhatsAppMessage();
       
       setSnackbar({
         open: true,
@@ -146,6 +148,31 @@ const ContactPage: React.FC = () => {
     }
   };
 
+  const handleWhatsAppMessage = () => {
+    if (!formData.name || !formData.message) {
+      setSnackbar({
+        open: true,
+        message: 'Please fill in at least Name and Message to send via WhatsApp',
+        severity: 'info'
+      });
+      return;
+    }
+
+    const phoneNumber = "918427818375";
+    
+    let whatsappMessage = `*New Inquiry via Website*\n\n`;
+    whatsappMessage += `👤 *Name:* ${formData.name}\n`;
+    whatsappMessage += `📧 *Email:* ${formData.email}\n`;
+    whatsappMessage += `📱 *Phone:* ${formData.phone || 'N/A'}\n`;
+    whatsappMessage += `📝 *Subject:* ${formData.subject}\n`;
+    whatsappMessage += `� *Message:* ${formData.message}\n`;
+
+    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+    console.log(url)
+    window.open(url, '_blank');
+
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -157,11 +184,27 @@ const ContactPage: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Left Section - Contact Information */}
           <div className="flex flex-col justify-center">
+             <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+              className="mb-8"
+            >
+              <img 
+                src="/images/contact-us.jpg" 
+                alt="Contact Us Illustration" 
+                className="max-w-md mx-auto object-contain h-64 rounded-full block"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = "https://illustrations.popsy.co/amber/surr-mailing.svg";
+                }} 
+              />
+            </motion.div>
+
             <motion.h1
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6"
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 text-center"
             >
               Contact Us
             </motion.h1>
@@ -170,7 +213,7 @@ const ContactPage: React.FC = () => {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-base sm:text-lg text-gray-700 mb-8 leading-relaxed"
+              className="text-base sm:text-lg text-gray-700 mb-8 leading-relaxed text-center"
             >
               We're here to help! Whether you have a question about our services, need assistance with your account, or want to provide feedback, our team is ready to assist you. Feel free to reach out to us.
             </motion.p>
@@ -179,41 +222,39 @@ const ContactPage: React.FC = () => {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="space-y-4 mb-8"
+              className="space-y-6 mb-8 flex flex-col items-center"
             >
-              <div>
-                <p className="text-sm text-gray-600 mb-1">Email:</p>
+              <div className="flex gap-2 items-center justify-center">
+                {/* <p className="text-sm text-gray-600 mb-1 font-bold">Email:</p> */}
                 <a 
                   href="mailto:kgtrainingandplacement@gmail.com" 
-                  className="text-lg sm:text-xl font-bold text-gray-900 hover:text-gray-700 transition-colors flex items-center gap-2"
+                  className="text-lg sm:text-xl font-bold text-gray-900 hover:text-gray-700 transition-colors flex items-center justify-center gap-2"
                 >
                   <MailIcon className='w-5 h-5 text-[#1944AB]'/>
                   <span className=' text-[#1944AB] text-sm'>kgtrainingandplacement@gmail.com</span>
                 </a>
               </div>
               
-              <div>
-                <p className="text-sm text-gray-600 mb-1">Phone:</p>
+              <div className="flex gap-2 items-center justify-center">
+                {/* <p className="text-sm text-gray-600 mb-1 font-bold">Phone:</p> */}
                 <a 
                   href="tel:+918427818375" 
-                  className="text-lg sm:text-xl font-bold text-gray-900 hover:text-gray-700 transition-colors flex items-center gap-2"
+                  className="text-lg sm:text-xl font-bold text-gray-900 hover:text-gray-700 transition-colors flex items-center justify-center gap-2"
                 >
                   <PhoneIcon className='w-5 h-5 text-[#1944AB]'/>
                   <span className=' text-[#1944AB] text-sm'>+91 84278 18375</span>
                 </a>
               </div>
               
-              <div>
-                <p className="text-sm text-gray-600 mb-1">Instagram:</p>
+              <div className="flex gap-2 items-center justify-center">
+                {/* <p className="text-sm text-gray-600 mb-1 font-bold">Instagram:</p> */}
                 <a 
                   href="https://www.instagram.com/kg_trainingsandplacements?igsh=dmxsZmgyNTc4NzI3/" 
-                  className="text-lg sm:text-xl font-bold text-gray-900 hover:text-gray-700 transition-colors flex items-center gap-2"
+                  className="text-lg sm:text-xl font-bold text-gray-900 hover:text-gray-700 transition-colors flex items-center justify-center gap-2"
                 >
                   <Instagram className='w-5 h-5 text-[#1944AB]'/>
                   <span className=' text-[#1944AB] text-sm'>Kg Training And Placements</span></a>
               </div>
-
-            
             </motion.div>
           </div>
 
@@ -307,7 +348,8 @@ const ContactPage: React.FC = () => {
                 />
               </div>
 
-              <div className="flex justify-end">
+              <div className="flex justify-end gap-4 flex-wrap">
+                
                 <button
                   type="submit"
                   disabled={isSubmitting}
