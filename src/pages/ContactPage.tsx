@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Instagram, MailIcon, PhoneIcon } from 'lucide-react';
 import { contactAPI } from '../services/api';
 import { Alert, Snackbar, CircularProgress } from '@mui/material';
+import { FaWhatsapp } from 'react-icons/fa';
 
 interface FormData {
   name: string;
@@ -191,7 +192,7 @@ const ContactPage: React.FC = () => {
               className="mb-8"
             >
               <img 
-                src="/images/contact-us.jpg" 
+                src="/images/contact.jpg" 
                 alt="Contact Us Illustration" 
                 className="max-w-md mx-auto object-contain h-64 rounded-full block"
                 onError={(e) => {
@@ -253,6 +254,16 @@ const ContactPage: React.FC = () => {
                   className="text-lg sm:text-xl font-bold text-gray-900 hover:text-gray-700 transition-colors flex items-center justify-center gap-2"
                 >
                   <Instagram className='w-5 h-5 text-[#1944AB]'/>
+                  <span className=' text-[#1944AB] text-sm'>Kg Training And Placements</span></a>
+              </div>
+
+              <div className="flex gap-2 items-center justify-center">
+                {/* <p className="text-sm text-gray-600 mb-1 font-bold">WhatsApp:</p> */}
+                <a 
+                  href="https://wa.me/918427818375" 
+                  className="text-lg sm:text-xl font-bold text-gray-900 hover:text-gray-700 transition-colors flex items-center justify-center gap-2"
+                >
+                  <FaWhatsapp className='w-5 h-5 text-[#1944AB]'/>
                   <span className=' text-[#1944AB] text-sm'>Kg Training And Placements</span></a>
               </div>
             </motion.div>

@@ -1,8 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Hero from "./components/Hero.tsx";
 import Partners from "./components/Partners.tsx";
-import ThreePromises from "./components/ThreePromises.tsx";
-
 import ContactPage from './pages/ContactPage.tsx';
 import AboutPage from './pages/AboutPage.tsx';
 import Footer from "./components/Footer.tsx";
@@ -22,11 +20,8 @@ const App = () => {
             <>
               <Hero />
               <Partners />
-              {/* <ThreePromises /> */}
               <CourseSalesPage />
               <Registration />
-
-
             </>
           } />
           <Route path="/contact" element={<ContactPage />} />

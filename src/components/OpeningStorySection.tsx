@@ -108,10 +108,10 @@ const OpeningStorySection = () => {
               <h3 className="text-xl text-blue-600 font-semibold mb-6">{name}</h3>
 
               <div className="space-y-4 text-gray-700">
-                <p className="leading-relaxed">
+                <p className="leading-relaxed text-indent-0">
                   When I started KG Training & Placements, it was not just to teach — it was to empower. I saw a gap between what students learn and what industries need. My goal was to bridge that gap.
                 </p>
-                <p className="leading-relaxed">
+                <p className="leading-relaxed text-indent-0">
                   We don't just train for exams — we build confidence, skills, and most importantly, a career path. KG isn't just an institute, it's a launchpad.
                 </p>
               </div>

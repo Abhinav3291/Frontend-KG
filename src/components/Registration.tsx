@@ -11,7 +11,12 @@ import {
   MapPin, 
   BookOpen, 
   MessageSquare,
-  Send
+  Send,
+  Briefcase,
+  GraduationCap,
+  Building,
+  MapPinned,
+  Clock
 } from "lucide-react";
 
 // Utility for className joins
@@ -26,6 +31,13 @@ type FormData = {
   address: string;
   comment: string;
   course: string;
+  status: 'Fresher' | 'Working Professional';
+  qualification: string;
+  preferredLocation: string;
+  workExperience: string;
+  currentCompany: string;
+  institution: string;
+  jobRole: string
 };
 
 type FormErrors = {
@@ -34,6 +46,12 @@ type FormErrors = {
   phone?: string;
   address?: string;
   course?: string;
+  qualification?: string;
+  preferredLocation?: string;
+  workExperience?: string;
+  currentCompany?: string;
+  institution?: string;
+  jobRole?: string;
 };
 
 type ToastType = {
@@ -50,6 +68,13 @@ const Registration = () => {
     address: "",
     comment: "",
     course: "Banking and Finance Course",
+    status: 'Fresher',
+    qualification: "",
+    preferredLocation: "",
+    workExperience: "",
+    currentCompany: "",
+    institution: "",
+    jobRole:"",
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
@@ -91,6 +116,20 @@ const Registration = () => {
 
     if (!formData.address.trim()) newErrors.address = "Address is required";
     else if (formData.address.trim().length < 10) newErrors.address = "Please provide a more detailed address";
+    
+    // New Validations
+    if (!formData.qualification.trim()) newErrors.qualification = "Qualification is required";
+    if (!formData.preferredLocation.trim()) newErrors.preferredLocation = "Preferred job location is required";
+
+    if (formData.status === 'Working Professional') {
+        if (!formData.workExperience) newErrors.workExperience = "Work experience is required";
+        if (!formData.currentCompany.trim()) newErrors.currentCompany = "Current/Past company is required";
+        if(!formData.jobRole.trim()) newErrors.jobRole = "Job role is required";
+    }
+
+    if (formData.status === 'Fresher') {
+      if (!formData.institution.trim()) newErrors.institution = "Institution/College name is required";
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -127,13 +166,42 @@ const Registration = () => {
     setIsSubmitting(true);
 
     try {
+      const messageDetail = `Status: ${formData.status}
+Qualification: ${formData.qualification}
+Preferred Job Location: ${formData.preferredLocation}
+${formData.status === 'Working Professional' ? `Work Experience: ${formData.workExperience}\nCurrent/Past Company: ${formData.currentCompany}\nJob Role: ${formData.jobRole}\n` : ''}${formData.status === 'Fresher' ? `Institution: ${formData.institution}\n` : ''}Address: ${formData.address}
+Comments: ${formData.comment || 'No comments'}`;
+
       await authAPI.register({
         name: formData.name,
         email: formData.email,
         phone: formData.phone,
         course: formData.course,
-        message: `Address: ${formData.address}\n\nComments: ${formData.comment || 'No comments'}`,
+        message: messageDetail,
       });
+
+      // WhatsApp Redirection
+      const phoneNumber = "918427818375";
+      let whatsappMessage = `*New Registration Application*\n\n`;
+      whatsappMessage += `👤 *Name:* ${formData.name}\n`;
+      whatsappMessage += `📧 *Email:* ${formData.email}\n`;
+      whatsappMessage += `📱 *Phone:* ${formData.phone}\n`;
+      whatsappMessage += `🎓 *Course:* ${formData.course}\n`;
+      whatsappMessage += `💼 *Status:* ${formData.status}\n`;
+      whatsappMessage += `🎓 *Qualification:* ${formData.qualification}\n`;
+      whatsappMessage += `📍 *Pref. Location:* ${formData.preferredLocation}\n`;
+      if (formData.status === 'Working Professional') {
+        whatsappMessage += `🕒 *Experience:* ${formData.workExperience}\n`;
+        whatsappMessage += `🏢 *Company:* ${formData.currentCompany}\n`;
+        whatsappMessage += `💼 *Job Role:* ${formData.jobRole}\n`;
+      }
+      if (formData.status === 'Fresher') {
+        whatsappMessage += `🏫 *Institution:* ${formData.institution}\n`;
+      }
+      whatsappMessage += `📝 *Comments:* ${formData.comment || 'N/A'}`;
+
+      const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+      window.open(url, '_blank');
 
       setFormData({
         name: "",
@@ -142,6 +210,13 @@ const Registration = () => {
         address: "",
         comment: "",
         course: "Banking and Finance Course",
+        status: 'Fresher',
+        qualification: "",
+        preferredLocation: "",
+        workExperience: "",
+        currentCompany: "",
+        institution: "",
+        jobRole:""
       });
 
       setToast({
@@ -313,6 +388,324 @@ const Registration = () => {
                   )}
                 </div>
               </div>
+
+              {/* Status Selection */}
+              <div className="space-y-2">
+                <label 
+                  htmlFor="status" 
+                  className="flex items-center gap-2 text-sm font-semibold text-gray-700"
+                >
+                  <Briefcase className="h-4 w-4 text-blue-600" />
+                  Current Status *
+                </label>
+                <div className="grid grid-cols-2 gap-4">
+                  <button
+                    type="button"
+                    onClick={() => setFormData(prev => ({ ...prev, status: 'Fresher' }))}
+                    className={cn(
+                      "flex items-center justify-center gap-2 py-3 px-4 rounded-lg border-2 transition-all duration-200",
+                      formData.status === 'Fresher'
+                        ? "border-[#1944AA] bg-blue-50 text-[#1944AA]"
+                        : "border-gray-200 bg-white text-gray-600 hover:border-gray-300"
+                    )}
+                  >
+                    <span>Fresher</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setFormData(prev => ({ ...prev, status: 'Working Professional' }))}
+                    className={cn(
+                      "flex items-center justify-center gap-2 py-3 px-4 rounded-lg border-2 transition-all duration-200",
+                      formData.status === 'Working Professional'
+                        ? "border-[#1944AA] bg-blue-50 text-[#1944AA]"
+                        : "border-gray-200 bg-white text-gray-600 hover:border-gray-300"
+                    )}
+                  >
+                    <span>Working Professional</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Qualification Field */}
+              <div className="space-y-2">
+                <label 
+                  htmlFor="qualification" 
+                  className="flex items-center gap-2 text-sm font-semibold text-gray-700"
+                >
+                  <GraduationCap className="h-4 w-4 text-blue-600" />
+                  Qualification *
+                </label>
+                <div className="relative">
+                  <input
+                    id="qualification"
+                    name="qualification"
+                    type="text"
+                    value={formData.qualification}
+                    onChange={handleInputChange}
+                    onFocus={() => handleFocus('qualification')}
+                    onBlur={handleBlur}
+                    placeholder="e.g. B.Tech, MBA, BCA"
+                    className={cn(
+                      'w-full pl-11 pr-4 py-3 border-2 rounded-lg',
+                      'transition-all duration-200',
+                      'focus:outline-none focus:ring-2 focus:ring-[#1944AA] focus:ring-offset-2',
+                      'placeholder:text-gray-400',
+                      errors.qualification 
+                        ? "border-red-500 bg-red-50 focus:border-red-500 focus:ring-red-500" 
+                        : focusedField === 'qualification'
+                        ? "border-[#1944AA] bg-blue-50/50"
+                        : "border-gray-300 bg-white hover:border-gray-400"
+                    )}
+                  />
+                  <GraduationCap className={cn(
+                    "absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 transition-colors duration-200",
+                    errors.qualification ? "text-red-500" : focusedField === 'qualification' ? "text-blue-600" : "text-gray-400"
+                  )} />
+                </div>
+                {errors.qualification && (
+                  <p className="text-sm text-red-600 flex items-center gap-1 animate-in slide-in-from-top-1">
+                    <AlertCircle className="h-3 w-3" />
+                    {errors.qualification}
+                  </p>
+                )}
+              </div>
+
+               {/* Preferred Location Field */}
+               <div className="space-y-2">
+                <label 
+                  htmlFor="preferredLocation" 
+                  className="flex items-center gap-2 text-sm font-semibold text-gray-700"
+                >
+                  <MapPinned className="h-4 w-4 text-blue-600" />
+                  Preferred Job Location *
+                </label>
+                <div className="relative">
+                  <input
+                    id="preferredLocation"
+                    name="preferredLocation"
+                    type="text"
+                    value={formData.preferredLocation}
+                    onChange={handleInputChange}
+                    onFocus={() => handleFocus('preferredLocation')}
+                    onBlur={handleBlur}
+                    placeholder="Enter your preferred job location"
+                    className={cn(
+                      'w-full pl-11 pr-4 py-3 border-2 rounded-lg',
+                      'transition-all duration-200',
+                      'focus:outline-none focus:ring-2 focus:ring-[#1944AA] focus:ring-offset-2',
+                      'placeholder:text-gray-400',
+                      errors.preferredLocation 
+                        ? "border-red-500 bg-red-50 focus:border-red-500 focus:ring-red-500" 
+                        : focusedField === 'preferredLocation'
+                        ? "border-[#1944AA] bg-blue-50/50"
+                        : "border-gray-300 bg-white hover:border-gray-400"
+                    )}
+                  />
+                  <MapPinned className={cn(
+                    "absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 transition-colors duration-200",
+                    errors.preferredLocation ? "text-red-500" : focusedField === 'preferredLocation' ? "text-blue-600" : "text-gray-400"
+                  )} />
+                </div>
+                {errors.preferredLocation && (
+                  <p className="text-sm text-red-600 flex items-center gap-1 animate-in slide-in-from-top-1">
+                    <AlertCircle className="h-3 w-3" />
+                    {errors.preferredLocation}
+                  </p>
+                )}
+              </div>
+
+               {/* Fresher Specific Fields */}
+               {formData.status === 'Fresher' && (
+                  <div className="space-y-2 animate-in slide-in-from-top-4 fade-in-0 duration-300">
+                    <label 
+                      htmlFor="institution" 
+                      className="flex items-center gap-2 text-sm font-semibold text-gray-700"
+                    >
+                      <Building className="h-4 w-4 text-blue-600" />
+                      Institution/College Name *
+                    </label>
+                    <div className="relative">
+                      <input
+                        id="institution"
+                        name="institution"
+                        type="text"
+                        value={formData.institution}
+                        onChange={handleInputChange}
+                        onFocus={() => handleFocus('institution')}
+                        onBlur={handleBlur}
+                        placeholder="Enter your college or university name"
+                        className={cn(
+                          'w-full pl-11 pr-4 py-3 border-2 rounded-lg',
+                          'transition-all duration-200',
+                          'focus:outline-none focus:ring-2 focus:ring-[#1944AA] focus:ring-offset-2',
+                          'placeholder:text-gray-400',
+                          errors.institution 
+                            ? "border-red-500 bg-red-50 focus:border-red-500 focus:ring-red-500" 
+                            : focusedField === 'institution'
+                            ? "border-[#1944AA] bg-blue-50/50"
+                            : "border-gray-300 bg-white hover:border-gray-400"
+                        )}
+                      />
+                      <Building className={cn(
+                        "absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 transition-colors duration-200",
+                        errors.institution ? "text-red-500" : focusedField === 'institution' ? "text-blue-600" : "text-gray-400"
+                      )} />
+                    </div>
+                    {errors.institution && (
+                      <p className="text-sm text-red-600 flex items-center gap-1 animate-in slide-in-from-top-1">
+                        <AlertCircle className="h-3 w-3" />
+                        {errors.institution}
+                      </p>
+                    )}
+                  </div>
+               )}
+
+              {/* Working Professional Specific Fields */}
+              {formData.status === 'Working Professional' && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 animate-in slide-in-from-top-4 fade-in-0 duration-300">
+                  {/* Work Experience */}
+                  <div className="space-y-2">
+                    <label 
+                      htmlFor="workExperience" 
+                      className="flex items-center gap-2 text-sm font-semibold text-gray-700"
+                    >
+                      <Clock className="h-4 w-4 text-blue-600" />
+                      Work Experience *
+                    </label>
+                    <div className="relative">
+                      <select
+                        id="workExperience"
+                        name="workExperience"
+                        value={formData.workExperience}
+                        onChange={handleInputChange}
+                        onFocus={() => handleFocus('workExperience')}
+                        onBlur={handleBlur}
+                        className={cn(
+                          "w-full pl-11 pr-10 py-3 border-2 rounded-lg appearance-none",
+                          "transition-all duration-200",
+                          "focus:outline-none focus:ring-2 focus:ring-[#1944AA] focus:ring-offset-2",
+                          errors.workExperience
+                            ? "border-red-500 bg-red-50"
+                            : focusedField === 'workExperience'
+                            ? "border-[#1944AA] bg-blue-50/50"
+                            : "border-gray-300 bg-white hover:border-gray-400"
+                        )}
+                      >
+                        <option value="">Select Experience</option>
+                        <option value="0-1 Years">0-1 Years</option>
+                        <option value="1-2 Years">1-2 Years</option>
+                        <option value="2-3 Years">2-3 Years</option>
+                        <option value="3-4 Years">3-4 Years</option>
+                        <option value="4-5 Years">4-5 Years</option>
+                        <option value="5+ Years">5+ Years</option>\
+                      </select>
+                      <Clock className={cn(
+                        "absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 transition-colors duration-200 pointer-events-none",
+                        errors.workExperience ? "text-red-500" : focusedField === 'workExperience' ? "text-blue-600" : "text-gray-400"
+                      )} />
+                      <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                        <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </div>
+                    </div>
+                    {errors.workExperience && (
+                      <p className="text-sm text-red-600 flex items-center gap-1 animate-in slide-in-from-top-1">
+                        <AlertCircle className="h-3 w-3" />
+                        {errors.workExperience}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Current Company */}
+                  <div className="space-y-2">
+                    <label 
+                      htmlFor="currentCompany" 
+                      className="flex items-center gap-2 text-sm font-semibold text-gray-700"
+                    >
+                      <Building className="h-4 w-4 text-blue-600" />
+                      Current/Past Company *
+                    </label>
+                    <div className="relative">
+                      <input
+                        id="currentCompany"
+                        name="currentCompany"
+                        type="text"
+                        value={formData.currentCompany}
+                        onChange={handleInputChange}
+                        onFocus={() => handleFocus('currentCompany')}
+                        onBlur={handleBlur}
+                        placeholder="Enter your company name"
+                        className={cn(
+                          'w-full pl-11 pr-4 py-3 border-2 rounded-lg',
+                          'transition-all duration-200',
+                          'focus:outline-none focus:ring-2 focus:ring-[#1944AA] focus:ring-offset-2',
+                          'placeholder:text-gray-400',
+                          errors.currentCompany 
+                            ? "border-red-500 bg-red-50 focus:border-red-500 focus:ring-red-500" 
+                            : focusedField === 'currentCompany'
+                            ? "border-[#1944AA] bg-blue-50/50"
+                            : "border-gray-300 bg-white hover:border-gray-400"
+                        )}
+                      />
+                      <Building className={cn(
+                        "absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 transition-colors duration-200",
+                        errors.currentCompany ? "text-red-500" : focusedField === 'currentCompany' ? "text-blue-600" : "text-gray-400"
+                      )} />
+                    </div>
+                    {errors.currentCompany && (
+                      <p className="text-sm text-red-600 flex items-center gap-1 animate-in slide-in-from-top-1">
+                        <AlertCircle className="h-3 w-3" />
+                        {errors.currentCompany}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Job Role */}
+                  <div className="space-y-2 w-full sm:col-span-2">
+                    <label 
+                      htmlFor="jobRole" 
+                      className="flex items-center gap-2 text-sm font-semibold text-gray-700"
+                    >
+                      <Briefcase className="h-4 w-4 text-blue-600" />
+                      Job Role *
+                    </label>
+                    <div className="relative">
+                      <input
+                        id="jobRole"
+                        name="jobRole"
+                        type="text"
+                        value={formData.jobRole}
+                        onChange={handleInputChange}
+                        onFocus={() => handleFocus('jobRole')}
+                        onBlur={handleBlur}
+                        placeholder="Enter your job role"
+                        className={cn(
+                          'w-full pl-11 pr-4 py-3 border-2 rounded-lg',
+                          'transition-all duration-200',
+                          'focus:outline-none focus:ring-2 focus:ring-[#1944AA] focus:ring-offset-2',
+                          'placeholder:text-gray-400',
+                          errors.jobRole 
+                            ? "border-red-500 bg-red-50 focus:border-red-500 focus:ring-red-500" 
+                            : focusedField === 'jobRole'
+                            ? "border-[#1944AA] bg-blue-50/50"
+                            : "border-gray-300 bg-white hover:border-gray-400"
+                        )}
+                      />
+                      <Briefcase className={cn(
+                        "absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 transition-colors duration-200",
+                        errors.jobRole ? "text-red-500" : focusedField === 'jobRole' ? "text-blue-600" : "text-gray-400"
+                      )} />
+                    </div>
+                    {errors.jobRole && (
+                      <p className="text-sm text-red-600 flex items-center gap-1 animate-in slide-in-from-top-1">
+                        <AlertCircle className="h-3 w-3" />
+                        {errors.jobRole}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              )}
 
               {/* Address Field */}
               <div className="space-y-2">

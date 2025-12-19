@@ -18,8 +18,8 @@ const AboutPage = () => {
               viewport={{ once: true }}
               className="text-4xl md:text-5xl font-bold leading-tight text-gray-900"
             >
-              Building Careers, <br />
-              <span className="text-blue-600">Transforming Lives.</span>
+              Campus to, <br /> 
+              <span className="text-blue-600">Corporate.</span>
             </motion.h1>
 
             <motion.div
@@ -30,7 +30,7 @@ const AboutPage = () => {
               className="relative w-full aspect-[4/3] bg-blue-50 overflow-hidden rounded-2xl shadow-lg"
             >
               <img 
-                src="/images/team.jpg" 
+                src="/images/about.png" 
                 alt="KG Training Team"
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
               />

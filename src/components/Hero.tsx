@@ -133,11 +133,11 @@ export default function Hero() {
                 flex relative overflow-hidden shadow-sm ${i === cards.length - 1 ? 'mr-10' : ''}`}
               >
                 <div className="w-1/2 z-10 flex flex-col justify-center">
-                  <h2 className="text-xl sm:text-2xl lg:text-[32px] font-bold text-gray-900 mb-3">
+                  <h2 className="text-lg sm:text-xl lg:text-[32px] font-bold text-gray-900 mb-3">
                     {card.title}
                   </h2>
 
-                  <p className="text-sm sm:text-base lg:text-lg mb-5 sm:mb-6 text-gray-700 max-w-md">
+                  <p className="text-xs sm:text-base lg:text-lg mb-5 sm:mb-6 text-gray-700 max-w-md">
                     {card.subtitle}
                   </p>
 
@@ -174,9 +174,9 @@ export default function Hero() {
         <button
           onClick={scrollLeft}
           disabled={currentIndex === 0}
-          className="absolute left-2 top-1/2 -translate-y-1/2 p-3
-            bg-white border border-black rounded-full text-black shadow
-            disabled:opacity-40"
+          className="absolute left-2 top-1/2 -translate-y-1/2 p-1
+            bg-transparent border border-black rounded-full text-black shadow
+            disabled:opacity-40 lg:p-3 lg:bg-white"
         >
           <ChevronLeft />
         </button>
@@ -185,9 +185,9 @@ export default function Hero() {
         <button
           onClick={scrollRight}
           disabled={translateX >= maxScroll}
-          className="absolute right-2 top-1/2 -translate-y-1/2 p-3
-            bg-white border border-black rounded-full text-black shadow
-            disabled:opacity-40"
+          className="absolute right-2 top-1/2 -translate-y-1/2 p-1
+            bg-transparent border border-black rounded-full text-black shadow
+            disabled:opacity-40 lg:p-3 lg:bg-white"
         >
           <ChevronRight />
         </button>

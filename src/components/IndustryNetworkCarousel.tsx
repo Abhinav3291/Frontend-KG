@@ -15,9 +15,9 @@ const industryNetworkData = [
   },
   {
     name: 'Mr Ankush Gupta',
-    title: 'COO and Co-Founder', // Fixed typo "Co founder"
+    title: 'COO and Co-Founder', 
     company: 'Refinserv Pvt Ltd',
-    subtitle: '',
+    subtitle: 'COO and Co-Founder',
     image: '/images/network/ankushGupta.jpg',
     icon: TrendingUp,
   },
@@ -25,7 +25,7 @@ const industryNetworkData = [
     name: 'Mr Manik Garg',
     title: 'Cluster Head',
     company: 'Bajaj Finserv Pvt Ltd',
-    subtitle: '',
+    subtitle: 'Cluster Head',
     image: '/images/network/manikGarg.jpg',
     icon: Award,
   },
@@ -33,7 +33,7 @@ const industryNetworkData = [
     name: 'Mr Amit Dua',
     title: 'Regional Head',
     company: 'IDFC First Bank',
-    subtitle: '',
+    subtitle: 'Regional Head',
     image: '/images/network/amitDua.jpg',
     icon: Star,
   },
@@ -45,6 +45,31 @@ const industryNetworkData = [
     image: '/images/network/hiteshSharma.jpg',
     icon: Building2,
   },
+  {
+        name: 'Mr Ravi Jha',
+        title: 'Chartered Accountant',
+        company: 'Bhattacharya and associates',
+        subtitle: 'Chartered Accountant',
+        image: '/images/network/ravi.jpg',
+        icon: Building2
+    },
+    {
+        name: 'Mr Tinku Sharma',
+        title: 'Chartered Accountant',
+        company: 'Mahindra and Mahindra',
+        subtitle: 'Chartered Accountant',
+        image: '/images/network/tinku.jpg',
+        icon: Building2
+    },
+     {
+        name: 'Mr Gaurav Garg',
+        title: 'Area Manager',
+        company: 'Cholamandalam Bank',
+        subtitle: 'Area Manager',
+        image: '/images/network/gaurav.jpg',
+        icon: Building2
+    },
+    
 ];
 
 const IndustryNetworkCard = ({ member }: { member: (typeof industryNetworkData)[0] }) => {
@@ -97,12 +122,9 @@ const IndustryNetworkCarousel = () => {
       }
 
       .animate-industry-network-slide {
-        animation: slideIndustryNetwork 24s linear infinite;
+        animation: slideIndustryNetwork 30s linear infinite;
       }
       
-      .animate-industry-network-slide:hover {
-        animation-play-state: paused;
-      }
     `;
 
     const style = document.createElement('style');

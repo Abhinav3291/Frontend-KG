@@ -1,4 +1,5 @@
 import { Facebook, Instagram, Linkedin } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa";
 
 const Footer = () => {
   return (
@@ -38,6 +39,15 @@ const Footer = () => {
                 className="text-gray-400 hover:text-white transition-colors"
               >
                 <Facebook className="w-5 h-5 sm:w-6 sm:h-6" />
+              </a>
+              {/* Whatsapp*/}
+              <a
+                href="https://wa.me/918427818375"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                <FaWhatsapp className="w-5 h-5 sm:w-6 sm:h-6" />
               </a>
             </div>
           </div>

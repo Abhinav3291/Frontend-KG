@@ -85,8 +85,8 @@ const WhyKgPage = () => {
                                         <img
                                             src={
                                                 activeTab === 'students'
-                                                    ? 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=800' // Students
-                                                    : 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80&w=800' // Corporate
+                                                    ? '/images/students.png' // Students
+                                                    : '/images/corporate-workers.png' // Corporate
                                             }
                                             alt={activeTab === 'students' ? 'Students learning' : 'Corporate meeting'}
                                             className="w-full h-64 md:h-96 object-cover"
@@ -98,8 +98,8 @@ const WhyKgPage = () => {
                                         <img
                                             src={
                                                 activeTab === 'students'
-                                                    ? 'https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&q=80&w=600' // Students group
-                                                    : 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=600' // Handshake
+                                                    ? '/images/student.png' // Students group
+                                                    : '/images/corporate.png' // Handshake
                                             }
                                             alt="Secondary visual"
                                             className="w-full h-full object-cover"
@@ -122,17 +122,17 @@ const WhyKgPage = () => {
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.5 }}
                             >
-                                <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-1.5 rounded-full text-sm font-semibold mb-6">
+                                {/* <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-1.5 rounded-full text-sm font-semibold mb-6">
                                     <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
                                     Why KG Training & Placements 
 
-                                </div>
+                                </div> */}
                                 <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
                                     Why Choose <span className="text-blue-600">KG?</span>
                                 </h2>
                                 <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                                    Discover the benefits that set us apart and propel your 
-                                    {activeTab === 'students' ? ' career ' : ' hiring strategy '} 
+                                    Discover the benefits that set us apart and 
+                                    {activeTab === 'students' ? ' ignite your career ' : ' propel your hiring strategy '} 
                                     forward.
                                 </p>
 
@@ -198,8 +198,6 @@ const WhyKgPage = () => {
             {/* Industry network section */}
             <IndustryNetworkCarousel />
 
-            {/* Instructor section */}
-            <InstructorSection />
         </div>
     );
 };

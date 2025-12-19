@@ -48,6 +48,24 @@ const networkData = [
         icon: Building2,
         gradient: 'from-pink-500 to-rose-600'
     },
+    {
+        name: 'Ravi Jha',
+        title: 'Chartered Accountant',
+        company: 'Bhattacharya and associates',
+        subtitle: 'Chartered Accountant',
+        image: '/images/network/ravi.jpg',
+        icon: Building2,
+        gradient: 'from-blue-500 to-red-600'
+    },
+    {
+        name: 'Tinku Sharma',
+        title: 'Chartered Accountant',
+        company: 'Mahindra and Mahindra',
+        subtitle: 'Chartered Accountant',
+        image: '/images/network/tinku.jpg',
+        icon: Building2,
+        gradient: 'from-blue-500 to-red-600'
+    },
 ];
 
 
