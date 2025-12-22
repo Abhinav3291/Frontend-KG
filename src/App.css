@@ -1,0 +1,72 @@
+/* App.css */
+
+/* Global Styles */
+body {
+  background: #f8fafc;
+  font-family: 'Inter', sans-serif;
+  color: #22223b;
+  margin: 0;
+  padding: 0;
+}
+
+section {
+  margin: 2rem auto;
+  padding: 2rem 1rem;
+  max-width: 900px;
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #3a5a40;
+}
+
+/* Course Sales Page Styles */
+.course-sales-page .cta-btn {
+  background: #3a86ff;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.75rem 2rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.course-sales-page .cta-btn:hover {
+  background: #26408b;
+}
+
+.course-sales-page .pricing-options {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.course-sales-page .pricing-card {
+  background: #edf6f9;
+  border: 2px solid #3a86ff;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  flex: 1 1 200px;
+  max-width: 260px;
+  text-align: center;
+}
+
+.course-sales-page .testimonial {
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+.course-sales-page .faq {
+  margin-top: 1rem;
+}
+
+.course-sales-page .faq-item {
+  margin-bottom: 1rem;
+}

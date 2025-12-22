@@ -1,0 +1,544 @@
+import React, { useState, useEffect } from "react";
+import { authAPI } from "../services/api";
+import { 
+  Loader2, 
+  CheckCircle, 
+  AlertCircle, 
+  X, 
+  User, 
+  Mail, 
+  Phone, 
+  MapPin, 
+  BookOpen, 
+  MessageSquare,
+  Send
+} from "lucide-react";
+
+// Utility for className joins
+function cn(...classes: (string | boolean | undefined)[]) {
+  return classes.filter(Boolean).join(' ');
+}
+
+type FormData = {
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
+  comment: string;
+  course: string;
+};
+
+type FormErrors = {
+  name?: string;
+  email?: string;
+  phone?: string;
+  address?: string;
+  course?: string;
+};
+
+type ToastType = {
+  open: boolean;
+  message: string;
+  type: 'success' | 'error' | 'info';
+};
+
+const Registration = () => {
+  const [formData, setFormData] = useState<FormData>({
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
+    comment: "",
+    course: "Banking and Finance Course",
+  });
+
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [toast, setToast] = useState<ToastType>({
+    open: false,
+    message: '',
+    type: 'info'
+  });
+  const [focusedField, setFocusedField] = useState<string | null>(null);
+
+  // Auto-dismiss toast after 5 seconds
+  useEffect(() => {
+    if (toast.open) {
+      const timer = setTimeout(() => {
+        setToast(prev => ({ ...prev, open: false }));
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [toast.open]);
+
+  const handleCloseToast = () => {
+    setToast(prev => ({ ...prev, open: false }));
+  };
+
+  const validateForm = (): boolean => {
+    const newErrors: FormErrors = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^\d{10}$/;
+
+    if (!formData.name.trim()) newErrors.name = "Name is required";
+    else if (formData.name.trim().length < 2) newErrors.name = "Name must be at least 2 characters";
+
+    if (!formData.email) newErrors.email = "Email is required";
+    else if (!emailRegex.test(formData.email)) newErrors.email = "Please enter a valid email address";
+
+    if (!formData.phone) newErrors.phone = "Phone number is required";
+    else if (!phoneRegex.test(formData.phone)) newErrors.phone = "Please enter a valid 10-digit phone number";
+
+    if (!formData.address.trim()) newErrors.address = "Address is required";
+    else if (formData.address.trim().length < 10) newErrors.address = "Please provide a more detailed address";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+
+    // Clear error when user starts typing
+    if (errors[name as keyof FormErrors]) {
+      const updatedErrors = { ...errors };
+      delete updatedErrors[name as keyof FormErrors];
+      setErrors(updatedErrors);
+    }
+  };
+
+  const handleFocus = (fieldName: string) => {
+    setFocusedField(fieldName);
+  };
+
+  const handleBlur = () => {
+    setFocusedField(null);
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!validateForm()) {
+      setToast({ open: true, message: "Please fix the errors in the form", type: "error" });
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      await authAPI.register({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        course: formData.course,
+        message: `Address: ${formData.address}\n\nComments: ${formData.comment || 'No comments'}`,
+      });
+
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        address: "",
+        comment: "",
+        course: "Banking and Finance Course",
+      });
+
+      setToast({
+        open: true,
+        message: "Registration successful! We'll contact you soon.",
+        type: "success"
+      });
+    } catch (error) {
+      console.error("Registration error:", error);
+      setToast({
+        open: true,
+        message: "Failed to submit registration. Please try again later.",
+        type: "error"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <section  className="py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 via-blue-50/30 to-gray-50 -mt-16">
+      <div className="max-w-4xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-8 sm:mb-12">
+          <h2 className="text-3xl sm:text-4xl font-bold text-[#1944AB] mb-2">
+            Registration Form
+          </h2>
+          <p className="text-[#1944AB]/80 text-sm sm:text-base">
+            Fill in your details to get started with your journey
+          </p>
+        </div>
+
+        {/* Form Card */}
+        <div id="registration-form" className="bg-white shadow-xl rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-2xl">
+          <div className="w-full p-6 sm:p-8 lg:p-10">
+            <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
+              {/* Name Field */}
+              <div className="space-y-2">
+                <label 
+                  htmlFor="name" 
+                  className="flex items-center gap-2 text-sm font-semibold text-gray-700"
+                >
+                  <User className="h-4 w-4 text-blue-600" />
+                  Full Name *
+                </label>
+                <div className="relative">
+                  <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    onFocus={() => handleFocus('name')}
+                    onBlur={handleBlur}
+                    placeholder="Enter your full name"
+                    className={cn(
+                      'w-full pl-11 pr-4 py-3 border-2 rounded-lg',
+                      'transition-all duration-200',
+                      'focus:outline-none focus:ring-2 focus:ring-[#1944AA] focus:ring-offset-2',
+                      'placeholder:text-gray-400',
+                      errors.name 
+                        ? "border-red-500 bg-red-50 focus:border-red-500 focus:ring-red-500" 
+                        : focusedField === 'name'
+                        ? "border-[#1944AA] bg-blue-50/50"
+                        : "border-gray-300 bg-white hover:border-gray-400"
+                    )}
+                  />
+                  <User className={cn(
+                    "absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 transition-colors duration-200",
+                    errors.name ? "text-red-500" : focusedField === 'name' ? "text-blue-600" : "text-gray-400"
+                  )} />
+                </div>
+                {errors.name && (
+                  <p className="text-sm text-red-600 flex items-center gap-1 animate-in slide-in-from-top-1">
+                    <AlertCircle className="h-3 w-3" />
+                    {errors.name}
+                  </p>
+                )}
+              </div>
+
+              {/* Email and Phone Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+                {/* Email Field */}
+                <div className="space-y-2">
+                  <label 
+                    htmlFor="email" 
+                    className="flex items-center gap-2 text-sm font-semibold text-gray-700"
+                  >
+                    <Mail className="h-4 w-4 text-blue-600" />
+                    Email *
+                  </label>
+                  <div className="relative">
+                    <input
+                      id="email"
+                      name="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      onFocus={() => handleFocus('email')}
+                      onBlur={handleBlur}
+                      placeholder="your.email@example.com"
+                      className={cn(
+                        'w-full pl-11 pr-4 py-3 border-2 rounded-lg',
+                        'transition-all duration-200',
+                        'focus:outline-none focus:ring-2 focus:ring-[#1944AA] focus:ring-offset-2',
+                        'placeholder:text-gray-400',
+                        errors.email 
+                          ? "border-red-500 bg-red-50 focus:border-red-500 focus:ring-red-500" 
+                          : focusedField === 'email'
+                          ? "border-[#1944AA] bg-blue-50/50"
+                          : "border-gray-300 bg-white hover:border-gray-400"
+                      )}
+                    />
+                    <Mail className={cn(
+                      "absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 transition-colors duration-200",
+                      errors.email ? "text-red-500" : focusedField === 'email' ? "text-blue-600" : "text-gray-400"
+                    )} />
+                  </div>
+                  {errors.email && (
+                    <p className="text-sm text-red-600 flex items-center gap-1 animate-in slide-in-from-top-1">
+                      <AlertCircle className="h-3 w-3" />
+                      {errors.email}
+                    </p>
+                  )}
+                </div>
+
+                {/* Phone Field */}
+                <div className="space-y-2">
+                  <label 
+                    htmlFor="phone" 
+                    className="flex items-center gap-2 text-sm font-semibold text-gray-700"
+                  >
+                    <Phone className="h-4 w-4 text-blue-600" />
+                    Phone *
+                  </label>
+                  <div className="relative">
+                    <input
+                      id="phone"
+                      name="phone"
+                      type="tel"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      onFocus={() => handleFocus('phone')}
+                      onBlur={handleBlur}
+                      placeholder="10-digit number"
+                      maxLength={10}
+                      className={cn(
+                        'w-full pl-11 pr-4 py-3 border-2 rounded-lg',
+                        'transition-all duration-200',
+                        'focus:outline-none focus:ring-2 focus:ring-[#1944AA] focus:ring-offset-2',
+                        'placeholder:text-gray-400',
+                        errors.phone 
+                          ? "border-red-500 bg-red-50 focus:border-red-500 focus:ring-red-500" 
+                          : focusedField === 'phone'
+                          ? "border-[#1944AA] bg-blue-50/50"
+                          : "border-gray-300 bg-white hover:border-gray-400"
+                      )}
+                    />
+                    <Phone className={cn(
+                      "absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 transition-colors duration-200",
+                      errors.phone ? "text-red-500" : focusedField === 'phone' ? "text-blue-600" : "text-gray-400"
+                    )} />
+                  </div>
+                  {errors.phone && (
+                    <p className="text-sm text-red-600 flex items-center gap-1 animate-in slide-in-from-top-1">
+                      <AlertCircle className="h-3 w-3" />
+                      {errors.phone}
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              {/* Address Field */}
+              <div className="space-y-2">
+                <label 
+                  htmlFor="address" 
+                  className="flex items-center gap-2 text-sm font-semibold text-gray-700"
+                >
+                  <MapPin className="h-4 w-4 text-blue-600" />
+                  Address *
+                </label>
+                <div className="relative">
+                  <textarea
+                    id="address"
+                    name="address"
+                    value={formData.address}
+                    onChange={handleInputChange}
+                    onFocus={() => handleFocus('address')}
+                    onBlur={handleBlur}
+                    placeholder="Enter your complete address"
+                    rows={3}
+                    className={cn(
+                      'w-full pl-11 pr-4 py-3 border-2 rounded-lg resize-none',
+                      'transition-all duration-200',
+                      'focus:outline-none focus:ring-2 focus:ring-[#1944AA] focus:ring-offset-2',
+                      'placeholder:text-gray-400',
+                      errors.address 
+                        ? "border-red-500 bg-red-50 focus:border-red-500 focus:ring-red-500" 
+                        : focusedField === 'address'
+                        ? "border-[#1944AA] bg-blue-50/50"
+                        : "border-gray-300 bg-white hover:border-gray-400"
+                    )}
+                  />
+                  <MapPin className={cn(
+                    "absolute left-3 top-3 h-5 w-5 transition-colors duration-200",
+                    errors.address ? "text-red-500" : focusedField === 'address' ? "text-blue-600" : "text-gray-400"
+                  )} />
+                </div>
+                <div className="flex justify-between items-center">
+                  {errors.address && (
+                    <p className="text-sm text-red-600 flex items-center gap-1 animate-in slide-in-from-top-1">
+                      <AlertCircle className="h-3 w-3" />
+                      {errors.address}
+                    </p>
+                  )}
+                  <p className="text-xs text-gray-500 ml-auto">
+                    {formData.address.length} characters
+                  </p>
+                </div>
+              </div>
+
+              {/* Course Selection */}
+              <div className="space-y-2">
+                <label 
+                  htmlFor="course" 
+                  className="flex items-center gap-2 text-sm font-semibold text-gray-700"
+                >
+                  <BookOpen className="h-4 w-4 text-blue-600" />
+                  Select Course
+                </label>
+                <div className="relative">
+                  <select
+                    id="course"
+                    name="course"
+                    value={formData.course}
+                    onChange={handleInputChange}
+                    onFocus={() => handleFocus('course')}
+                    onBlur={handleBlur}
+                    className={cn(
+                      "w-full pl-11 pr-10 py-3 border-2 rounded-lg appearance-none",
+                      "transition-all duration-200",
+                      "focus:outline-none focus:ring-2 focus:ring-[#1944AA] focus:ring-offset-2",
+                      focusedField === 'course'
+                        ? "border-[#1944AA] bg-blue-50/50"
+                        : "border-gray-300 bg-white hover:border-gray-400"
+                    )}
+                  >
+                    <option value="Banking and Finance Course">Banking and Finance Course</option>
+                  </select>
+                  <BookOpen className={cn(
+                    "absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 transition-colors duration-200 pointer-events-none",
+                    focusedField === 'course' ? "text-blue-600" : "text-gray-400"
+                  )} />
+                  <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                    <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              {/* Comments Field */}
+              <div className="space-y-2">
+                <label 
+                  htmlFor="comment" 
+                  className="flex items-center gap-2 text-sm font-semibold text-gray-700"
+                >
+                  <MessageSquare className="h-4 w-4 text-blue-600" />
+                  Additional Comments
+                </label>
+                <div className="relative">
+                  <textarea
+                    id="comment"
+                    name="comment"
+                    rows={4}
+                    value={formData.comment}
+                    onChange={handleInputChange}
+                    onFocus={() => handleFocus('comment')}
+                    onBlur={handleBlur}
+                    placeholder="Any additional information you'd like to share..."
+                    className={cn(
+                      'w-full pl-11 pr-4 py-3 border-2 rounded-lg resize-none',
+                      'transition-all duration-200',
+                      'focus:outline-none focus:ring-2 focus:ring-[#1944AA] focus:ring-offset-2',
+                      'placeholder:text-gray-400',
+                      focusedField === 'comment'
+                        ? "border-[#1944AA] bg-blue-50/50"
+                        : "border-gray-300 bg-white hover:border-gray-400"
+                    )}
+                  />
+                  <MessageSquare className={cn(
+                    "absolute left-3 top-3 h-5 w-5 transition-colors duration-200",
+                    focusedField === 'comment' ? "text-blue-600" : "text-gray-400"
+                  )} />
+                </div>
+                <p className="text-xs text-gray-500 text-right">
+                  {formData.comment.length} characters
+                </p>
+              </div>
+
+              {/* Submit Button */}
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className={cn(
+                  "w-full bg-gradient-to-r from-blue-600 to-blue-800 text-white py-3.5 px-6 rounded-lg",
+                  "font-semibold text-base transition-all duration-300",
+                  "flex items-center justify-center gap-2",
+                  "shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]",
+                  "disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100",
+                  "focus:outline-none focus:ring-4 focus:ring-[#1944AA] focus:ring-offset-2"
+                )}
+              >
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="animate-spin h-5 w-5" />
+                    <span>Submitting...</span>
+                  </>
+                ) : (
+                  <>
+                    <Send className="h-5 w-5" />
+                    <span>Register Now</span>
+                  </>
+                )}
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      {/* Enhanced Toast Notification */}
+      {toast.open && (
+        <div
+          className={cn(
+            "fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-[calc(100%-2rem)] sm:w-full max-w-sm",
+            "transform transition-all duration-300 ease-out",
+            "animate-in slide-in-from-bottom-4 fade-in-0"
+          )}
+          role="alert"
+          aria-live="assertive"
+        >
+          <div
+            className={cn(
+              "p-4 border-l-4 rounded-lg shadow-2xl bg-white",
+              "backdrop-blur-sm",
+              toast.type === "success" 
+                ? "border-green-500 bg-green-50/90" 
+                : "border-red-500 bg-red-50/90"
+            )}
+          >
+            <div className="flex items-start gap-3">
+              <div className={cn(
+                "h-8 w-8 flex items-center justify-center rounded-full flex-shrink-0",
+                "transition-transform duration-200",
+                toast.type === "success" 
+                  ? "bg-green-100 text-green-600" 
+                  : "bg-red-100 text-red-600"
+              )}>
+                {toast.type === "success" ? (
+                  <CheckCircle className="h-5 w-5" />
+                ) : (
+                  <AlertCircle className="h-5 w-5" />
+                )}
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className={cn(
+                  "text-sm font-bold mb-1",
+                  toast.type === "success" ? "text-green-900" : "text-red-900"
+                )}>
+                  {toast.type === "success" ? "Success!" : "Error"}
+                </p>
+                <p className={cn(
+                  "text-sm leading-relaxed",
+                  toast.type === "success" ? "text-green-800" : "text-red-800"
+                )}>
+                  {toast.message}
+                </p>
+              </div>
+              <button 
+                onClick={handleCloseToast}
+                className={cn(
+                  "ml-2 flex-shrink-0 p-1 rounded-md transition-colors",
+                  "hover:bg-black/5 focus:outline-none focus:ring-2 focus:ring-offset-2",
+                  toast.type === "success"
+                    ? "text-green-600 hover:text-green-700 focus:ring-green-500"
+                    : "text-red-600 hover:text-red-700 focus:ring-red-500"
+                )}
+                aria-label="Close notification"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </section>
+  );
+};
+
+export default Registration;

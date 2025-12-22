@@ -1,0 +1,176 @@
+import React, { useEffect } from 'react';
+import '../styles/CourseSales.css';
+
+import { Section } from './ui/section';
+import { Container } from './ui/container';
+import { cn } from '../lib/utils';
+import { Linkedin, Twitter, Mail } from 'lucide-react';
+import { motion } from 'framer-motion';
+
+export interface InstructorStats {
+  students: number;
+  courses: number;
+  yearsExperience: number;
+}
+
+export interface SocialLink {
+  platform: 'linkedin' | 'twitter' | 'email';
+  url: string;
+  label: string;
+}
+
+export interface InstructorSectionProps {
+  name: string;
+  role: string;
+  bio: string[];
+  image: {
+    src: string;
+    alt: string;
+  };
+  stats: InstructorStats;
+  socialLinks: SocialLink[];
+  className?: string;
+}
+
+const socialIcons: Record<string, React.ReactNode> = {
+  linkedin: <Linkedin className="w-5 h-5" />,
+  twitter: <Twitter className="w-5 h-5" />,
+  email: <Mail className="w-5 h-5" />,
+};
+
+// const instructorHighlights = [
+//   '10+ Years of Banking Experience',
+//   'Mentored 500+ Students',
+//   'Specialist in Retail Banking & NBFC Roles',
+//   'Expert in Career & Interview Guidance',
+// ];
+
+const InstructorSection = () => {
+  const name = 'Sukhpreet Singh';
+  const role = 'COO';
+  const bio = [
+    'Visionary leader with a Masters in Commerce from Malwa region, whose mission is to serve society through education and empowerment. His vision is to empower individuals through quality education, helping them become self-reliant and support their families while providing skilled professionals to the corporate world.'
+  ];
+  const image = {
+    src: '/WhatsApp Image 2025-07-14 at 13.05.02_8c9a4306.jpg',
+    alt: `${name}, ${role} at our institution`
+  };
+  const socialLinks = [
+    {
+      platform: 'email',
+      url: 'mailto:contact@example.com',
+      label: 'Send an email',
+    },
+  ];
+
+  // Auto-loop animation similar to Success Stories
+  useEffect(() => {
+    const keyframes = `
+      @keyframes slideInstructors {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+      }
+
+      .animate-instructors-slide {
+        animation: slideInstructors 22s linear infinite;
+      }
+    `;
+
+    const style = document.createElement('style');
+    style.textContent = keyframes;
+    document.head.appendChild(style);
+
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
+
+  return (
+    <Section className={cn('bg-gray-50 -mb-16 -mt-16 mb-16')}>
+      <Container>
+        <div className="h-full w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          {/* Instructor Image */}
+          <motion.div
+            className="lg:col-span-5 relative group mx-auto"
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="sm:block md:hidden text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Meet Our {role.split(' ').pop()}
+            </h2>
+            <div className="w-64 h-64 relative aspect-square rounded-2xl overflow-hidden shadow-xl">
+              <img
+                src={image.src}
+                alt={image.alt}
+                className="w-full h-full object-fit transition-transform duration-500 group-hover:scale-105"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                <div className="space-y-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                  <h3 className="text-white text-2xl font-bold">{name}</h3>
+                  <p className="text-blue-200 font-medium">{role}</p>
+                  <div className="flex space-x-3 pt-2">
+                    {socialLinks.map((link, index) => (
+                      <a
+                        key={index}
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={link.label}
+                        className="text-white hover:text-blue-300 transition-colors"
+                      >
+                        {socialIcons[link.platform]}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Instructor Info */}
+          <motion.div
+            className="lg:col-span-7"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <div className="max-w-3xl h-auto">
+              <h2 className="hidden sm:block text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Meet Our {role.split(' ').pop()}
+              </h2>
+              <h3 className="text-xl text-blue-600 font-semibold mb-4">{name}</h3>
+
+              <div className="space-y-4 text-gray-700 mb-4">
+                {bio.map((paragraph, index) => (
+                  <p key={index} className="leading-relaxed">
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+
+              {/* Auto-loop highlight strip */}
+              {/* <div className="mt-3 overflow-hidden">
+                <div className="flex gap-4 animate-instructors-slide w-max">
+                  {[...instructorHighlights, ...instructorHighlights].map((highlight, index) => (
+                    <div
+                      key={`${highlight}-${index}`}
+                      className="px-4 py-2 rounded-full bg-blue-50 text-blue-700 text-sm font-medium shadow-sm whitespace-nowrap border border-blue-100"
+                    >
+                      {highlight}
+                    </div>
+                  ))}
+                </div>
+              </div> */}
+            </div>
+          </motion.div>
+        </div>
+      </Container>
+    </Section>
+  );
+};
+
+export default InstructorSection;
