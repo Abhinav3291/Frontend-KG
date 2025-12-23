@@ -128,16 +128,16 @@ export default function Hero() {
               <div
                 className={`${card.bgColor}
                 rounded-3xl
-                h-[280px] sm:h-[320px] lg:h-[340px]
-                p-6 sm:p-8 lg:p-10
-                flex relative overflow-hidden shadow-sm ${i === cards.length - 1 ? 'mr-10' : ''}`}
+                h-[480px] sm:h-[320px] lg:h-[340px]
+                p-0 sm:p-8 lg:p-10
+                flex flex-col sm:flex-row relative overflow-hidden shadow-sm ${i === cards.length - 1 ? 'mr-10' : ''}`}
               >
-                <div className="w-1/2 z-10 flex flex-col justify-center">
-                  <h2 className="text-lg sm:text-xl lg:text-[32px] font-bold text-gray-900 mb-3">
+                <div className="w-full sm:w-1/2 z-10 flex flex-col justify-center h-[40%] sm:h-full px-6 pt-6 sm:p-0">
+                  <h2 className="text-2xl sm:text-3xl lg:text-[32px] font-bold text-gray-900 mb-2 sm:mb-3 leading-tight">
                     {card.title}
                   </h2>
 
-                  <p className="text-xs sm:text-base lg:text-lg mb-5 sm:mb-6 text-gray-700 max-w-md">
+                  <p className="text-base sm:text-lg lg:text-lg mb-4 sm:mb-6 text-gray-800 max-w-md line-clamp-3 sm:line-clamp-none leading-relaxed">
                     {card.subtitle}
                   </p>
 
@@ -146,11 +146,11 @@ export default function Hero() {
                   </button> */}
 
                   {card.logos && (
-                    <div className="flex gap-4 mt-6">
+                    <div className="flex gap-4 mt-auto sm:mt-6 mb-4 sm:mb-0">
                       {card.logos.map((logo, idx) => (
                         <div
                           key={idx}
-                          className="w-10 h-10 bg-white rounded-full shadow border flex items-center justify-center"
+                          className="w-10 h-10 bg-white rounded-full shadow border flex items-center justify-center shrink-0"
                         >
                           <img src={logo} className="w-6 object-contain" />
                         </div>
@@ -159,10 +159,10 @@ export default function Hero() {
                   )}
                 </div>
 
-                <div className="absolute right-0 top-0 h-full w-1/2">
+                <div className="absolute right-0 bottom-0 sm:top-0 h-[55%] sm:h-full w-full sm:w-1/2">
                   <img
                     src={card.image}
-                    className="w-full h-full object-cover rounded-l-[80px] lg:rounded-l-[120px]"
+                    className="w-full h-full object-cover sm:rounded-l-[80px] lg:rounded-l-[120px]"
                   />
                 </div>
               </div>
@@ -174,9 +174,9 @@ export default function Hero() {
         <button
           onClick={scrollLeft}
           disabled={currentIndex === 0}
-          className="absolute left-2 top-1/2 -translate-y-1/2 p-1
-            bg-transparent border border-black rounded-full text-black shadow
-            disabled:opacity-40 lg:p-3 lg:bg-white"
+          className="absolute left-2 top-1/2 -translate-y-1/2 p-3
+            bg-white border border-black rounded-full text-black shadow
+            disabled:opacity-40"
         >
           <ChevronLeft />
         </button>
@@ -185,9 +185,9 @@ export default function Hero() {
         <button
           onClick={scrollRight}
           disabled={translateX >= maxScroll}
-          className="absolute right-2 top-1/2 -translate-y-1/2 p-1
-            bg-transparent border border-black rounded-full text-black shadow
-            disabled:opacity-40 lg:p-3 lg:bg-white"
+          className="absolute right-2 top-1/2 -translate-y-1/2 p-3
+            bg-white border border-black rounded-full text-black shadow
+            disabled:opacity-40"
         >
           <ChevronRight />
         </button>
