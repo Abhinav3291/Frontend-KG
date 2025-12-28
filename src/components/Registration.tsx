@@ -16,7 +16,8 @@ import {
   GraduationCap,
   Building,
   MapPinned,
-  Clock
+  Clock,
+  Calendar
 } from "lucide-react";
 
 // Utility for className joins
@@ -37,7 +38,8 @@ type FormData = {
   workExperience: string;
   currentCompany: string;
   institution: string;
-  jobRole: string
+  jobRole: string;
+  graduationStartDate: string;
 };
 
 type FormErrors = {
@@ -52,6 +54,7 @@ type FormErrors = {
   currentCompany?: string;
   institution?: string;
   jobRole?: string;
+  graduationStartDate?: string;
 };
 
 type ToastType = {
@@ -75,6 +78,7 @@ const Registration = () => {
     currentCompany: "",
     institution: "",
     jobRole:"",
+    graduationStartDate: "",
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
@@ -119,6 +123,10 @@ const Registration = () => {
     
     // New Validations
     if (!formData.qualification.trim()) newErrors.qualification = "Qualification is required";
+    
+    const [gradYear, gradMonth] = (formData.graduationStartDate || '-').split('-');
+    if (!gradYear || !gradMonth || gradYear.length < 4) newErrors.graduationStartDate = "Please provide both Month and Year";
+    
     if (!formData.preferredLocation.trim()) newErrors.preferredLocation = "Preferred job location is required";
 
     if (formData.status === 'Working Professional') {
@@ -168,6 +176,7 @@ const Registration = () => {
     try {
       const messageDetail = `Status: ${formData.status}
 Qualification: ${formData.qualification}
+Graduation Start Date: ${formData.graduationStartDate}
 Preferred Job Location: ${formData.preferredLocation}
 ${formData.status === 'Working Professional' ? `Work Experience: ${formData.workExperience}\nCurrent/Past Company: ${formData.currentCompany}\nJob Role: ${formData.jobRole}\n` : ''}${formData.status === 'Fresher' ? `Institution: ${formData.institution}\n` : ''}Address: ${formData.address}
 Comments: ${formData.comment || 'No comments'}`;
@@ -189,6 +198,7 @@ Comments: ${formData.comment || 'No comments'}`;
       whatsappMessage += `🎓 *Course:* ${formData.course}\n`;
       whatsappMessage += `💼 *Status:* ${formData.status}\n`;
       whatsappMessage += `🎓 *Qualification:* ${formData.qualification}\n`;
+      whatsappMessage += `📅 *Start Date:* ${formData.graduationStartDate}\n`;
       whatsappMessage += `📍 *Pref. Location:* ${formData.preferredLocation}\n`;
       if (formData.status === 'Working Professional') {
         whatsappMessage += `🕒 *Experience:* ${formData.workExperience}\n`;
@@ -216,7 +226,8 @@ Comments: ${formData.comment || 'No comments'}`;
         workExperience: "",
         currentCompany: "",
         institution: "",
-        jobRole:""
+        jobRole:"",
+        graduationStartDate: ""
       });
 
       setToast({
@@ -466,6 +477,104 @@ Comments: ${formData.comment || 'No comments'}`;
                   <p className="text-sm text-red-600 flex items-center gap-1 animate-in slide-in-from-top-1">
                     <AlertCircle className="h-3 w-3" />
                     {errors.qualification}
+                  </p>
+                )}
+              </div>
+
+              {/* Graduation start Field */}
+              <div className="space-y-2">
+                <label 
+                  htmlFor="graduationStartDate" 
+                  className="flex items-center gap-2 text-sm font-semibold text-gray-700"
+                >
+                  <GraduationCap className="h-4 w-4 text-blue-600" />
+                  Graduation start date *
+                </label>
+                <div className="grid grid-cols-2 gap-4">
+                  {/* Month Select */}
+                  <div className="relative">
+                    <select
+                      id="graduationMonth"
+                      value={(formData.graduationStartDate || '').split('-')[1] || ''}
+                      onChange={(e) => {
+                         const current = formData.graduationStartDate || '-';
+                         const year = current.split('-')[0] || '';
+                         const month = e.target.value;
+                         setFormData(prev => ({...prev, graduationStartDate: `${year}-${month}`}));
+                         if (errors.graduationStartDate) {
+                             const newErrors = {...errors};
+                             delete newErrors.graduationStartDate;
+                             setErrors(newErrors);
+                         }
+                      }}
+                      onFocus={() => handleFocus('graduationStartDate')}
+                      onBlur={handleBlur}
+                      className={cn(
+                        'w-full pl-11 pr-8 py-3 border-2 rounded-lg appearance-none',
+                        'transition-all duration-200',
+                        'focus:outline-none focus:ring-2 focus:ring-[#1944AA] focus:ring-offset-2',
+                        errors.graduationStartDate 
+                          ? "border-red-500 bg-red-50" 
+                          : focusedField === 'graduationStartDate'
+                          ? "border-[#1944AA] bg-blue-50/50"
+                          : "border-gray-300 bg-white hover:border-gray-400"
+                      )}
+                    >
+                      <option value="">Month</option>
+                      {['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'].map(m => (
+                        <option key={m} value={m}>{new Date(2000, parseInt(m)-1, 1).toLocaleString('default', { month: 'long' })}</option>
+                      ))}
+                    </select>
+                    <Calendar className={cn(
+                      "absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 transition-colors duration-200 pointer-events-none",
+                      errors.graduationStartDate ? "text-red-500" : focusedField === 'graduationStartDate' ? "text-blue-600" : "text-gray-400"
+                    )} />
+                     <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                        <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </div>
+                  </div>
+
+                  {/* Year Input */}
+                  <div className="relative">
+                     <input
+                      type="number"
+                      placeholder="Year"
+                      min="1900"
+                      max="2100"
+                      value={(formData.graduationStartDate || '').split('-')[0] || ''}
+                      onChange={(e) => {
+                         const current = formData.graduationStartDate || '-';
+                         const month = current.split('-')[1] || '';
+                         const year = e.target.value;
+                         setFormData(prev => ({...prev, graduationStartDate: `${year}-${month}`}));
+                         if (errors.graduationStartDate) {
+                             const newErrors = {...errors};
+                             delete newErrors.graduationStartDate;
+                             setErrors(newErrors);
+                         }
+                      }}
+                       onFocus={() => handleFocus('graduationStartDate')}
+                       onBlur={handleBlur}
+                       className={cn(
+                        'w-full pl-4 pr-4 py-3 border-2 rounded-lg',
+                        'transition-all duration-200',
+                        'focus:outline-none focus:ring-2 focus:ring-[#1944AA] focus:ring-offset-2',
+                        'placeholder:text-gray-400',
+                         errors.graduationStartDate 
+                          ? "border-red-500 bg-red-50" 
+                          : focusedField === 'graduationStartDate'
+                          ? "border-[#1944AA] bg-blue-50/50"
+                          : "border-gray-300 bg-white hover:border-gray-400"
+                      )}
+                     />
+                  </div>
+                </div>
+                {errors.graduationStartDate && (
+                  <p className="text-sm text-red-600 flex items-center gap-1 animate-in slide-in-from-top-1">
+                    <AlertCircle className="h-3 w-3" />
+                    {errors.graduationStartDate}
                   </p>
                 )}
               </div>

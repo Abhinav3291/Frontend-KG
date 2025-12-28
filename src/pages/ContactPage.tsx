@@ -192,7 +192,7 @@ const ContactPage: React.FC = () => {
               className="mb-8"
             >
               <img 
-                src="/images/contact.jpg" 
+                src="/images/contactus.png" 
                 alt="Contact Us Illustration" 
                 className="max-w-md mx-auto object-contain h-64 rounded-full block"
                 onError={(e) => {
@@ -201,14 +201,14 @@ const ContactPage: React.FC = () => {
               />
             </motion.div>
 
-            <motion.h1
+            {/* <motion.h1
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
               className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 text-center"
             >
               Contact Us
-            </motion.h1>
+            </motion.h1> */}
             
             <motion.p
               initial={{ opacity: 0, x: -20 }}

@@ -122,7 +122,7 @@ const IndustryNetworkCarousel = () => {
       }
 
       .animate-industry-network-slide {
-        animation: slideIndustryNetwork 30s linear infinite;
+        animation: slideIndustryNetwork 60s linear infinite;
       }
       
     `;
@@ -161,7 +161,7 @@ const IndustryNetworkCarousel = () => {
             Meet Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Industry Network</span>
           </h2>
           <p className="text-base text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            Gain insights from seasoned leaders across top banks and NBFCs.
+            Gain insights from seasoned leaders across Top Banks and NBFCs.
           </p>
         </motion.div>
 
