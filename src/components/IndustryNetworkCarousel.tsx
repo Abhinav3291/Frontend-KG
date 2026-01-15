@@ -69,6 +69,14 @@ const industryNetworkData = [
         image: '/images/network/gaurav.jpg',
         icon: Building2
     },
+    {
+        name: 'CA Kulwinder Maan',
+        title: 'Senior SOX audit',
+        company: 'KPMG',
+        subtitle: 'Senior SOX audit',
+        image: '/images/network/kulvinder_maan.jpeg',
+        icon: Building2
+    },
     
 ];
 

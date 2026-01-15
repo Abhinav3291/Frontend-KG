@@ -38,13 +38,6 @@ const socialIcons: Record<string, React.ReactNode> = {
   email: <Mail className="w-5 h-5" />,
 };
 
-const instructorHighlights = [
-  '10+ Years of Banking Experience',
-  'Mentored 500+ Students',
-  'Specialist in Retail Banking & NBFC Roles',
-  'Expert in Career & Interview Guidance',
-];
-
 const InstructorSection = () => {
   const name = 'Sukhpreet Singh';
   const role = 'COO';

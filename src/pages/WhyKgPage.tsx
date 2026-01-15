@@ -3,9 +3,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Container } from '../components/ui/container';
 import { Section } from '../components/ui/section';
-import { Button } from '../components/ui/button';
 import IndustryNetworkCarousel from '../components/IndustryNetworkCarousel';
-import InstructorSection from '../components/InstructorSection';
 import {
     GraduationCap,
     Users,
@@ -13,8 +11,6 @@ import {
     Target,
     Shield,
     Zap,
-    CheckCircle,
-    ArrowRight,
 } from 'lucide-react';
 
 const WhyKgPage = () => {
