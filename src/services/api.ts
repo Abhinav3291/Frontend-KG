@@ -10,7 +10,7 @@ const apiClient = axios.create({
     'Content-Type': 'application/json',
     'Accept': 'application/json',
   },
-  withCredentials: true,
+  withCredentials: false,
   timeout: 10000, // 10 seconds
 });
 
@@ -19,7 +19,7 @@ export interface ApiResponse<T = any> {
   success: boolean;
   message?: string;
   data?: T;
-  error?: string;
+  error?: any;
   statusCode?: number;
   details?: any;
 }
@@ -126,7 +126,7 @@ async function apiRequest<T = any>(
       status,
       message: errorMessage,
       error: errorCode,
-      details: data?.details,
+      details: data?.details|| (data as any)?.errors ,
     });
 
     return {
