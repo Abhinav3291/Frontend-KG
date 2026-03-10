@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { authAPI } from "../services/api";
+import { registrationAPI } from "../services/api";
 import { 
   Loader2, 
   CheckCircle, 
@@ -181,13 +181,32 @@ Preferred Job Location: ${formData.preferredLocation}
 ${formData.status === 'Working Professional' ? `Work Experience: ${formData.workExperience}\nCurrent/Past Company: ${formData.currentCompany}\nJob Role: ${formData.jobRole}\n` : ''}${formData.status === 'Fresher' ? `Institution: ${formData.institution}\n` : ''}Address: ${formData.address}
 Comments: ${formData.comment || 'No comments'}`;
 
-      await authAPI.register({
+      const response = await registrationAPI.create({
         name: formData.name,
         email: formData.email,
         phone: formData.phone,
         course: formData.course,
         message: messageDetail,
+        address: formData.address,
+        comment: formData.comment,
+        status: formData.status,
+        qualification: formData.qualification,
+        preferredLocation: formData.preferredLocation,
+        workExperience: formData.workExperience,
+        currentCompany: formData.currentCompany,
+        institution: formData.institution,
+        jobRole: formData.jobRole,
+        graduationStartDate: formData.graduationStartDate,
       });
+
+      if (!response.success) {
+        setToast({
+          open: true,
+          message: response.message || "Failed to submit registration. Please try again later.",
+          type: "error"
+        });
+        return;
+      }
 
       // WhatsApp Redirection
       const phoneNumber = "918427818375";

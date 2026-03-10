@@ -2,6 +2,7 @@ import axios from 'axios';
 import type { AxiosError, AxiosResponse, AxiosRequestConfig } from 'axios';
 
 const API_BASE_URL = 'https://server-kg.onrender.com/api';
+// const API_BASE_URL = 'http://localhost:5000/api';
 
 // Create an axios instance with default config
 const apiClient = axios.create({
@@ -36,7 +37,25 @@ export interface AuthData {
   email: string;
   phone?: string;
   course: string;
-  message?: string; // For additional registration information
+  message?: string; // For additional registration information (auth-related, if needed)
+}
+
+export interface RegistrationData {
+  name: string;
+  email: string;
+  phone?: string;
+  address?: string;
+  comment?: string;
+  course: string;
+  status?: string;
+  qualification?: string;
+  preferredLocation?: string;
+  workExperience?: string;
+  currentCompany?: string;
+  institution?: string;
+  jobRole?: string;
+  graduationStartDate?: string;
+  message?: string; // combined detail string used in emails
 }
 
 export interface ContactData {
@@ -169,6 +188,12 @@ apiClient.interceptors.response.use(
 export const authAPI = {
   register: (data: AuthData) =>
     apiRequest('/auth/register', 'POST', data),
+};
+
+// Course Registration API (your separate flow)
+export const registrationAPI = {
+  create: (data: RegistrationData) =>
+    apiRequest('/registration', 'POST', data),
 };
 
 // Contact API
