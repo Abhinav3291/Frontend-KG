@@ -16,6 +16,8 @@ interface CertificateData {
   createdAt: string;
 }
 
+const API_BASE_URL = "https://server-kg.onrender.com";
+
 const VerifyCertificate = () => {
   const { id } = useParams<{ id: string }>();
   const [loading, setLoading] = useState(true);
@@ -28,7 +30,7 @@ const VerifyCertificate = () => {
       try {
         setLoading(true);
         setError('');
-        const res = await axios.get(`http://localhost:5000/api/certificate/verify/${id}`);
+        const res = await axios.get(`${API_BASE_URL}/api/certificate/verify/${id}`);
         if (res.data.success) {
           setCertificate(res.data.certificate);
         }
