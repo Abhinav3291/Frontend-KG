@@ -139,16 +139,26 @@ const AdminCertificates = () => {
     cert.batchNo.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const statusBadge = (status: string) => (
+    <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${
+      status === 'Verified' 
+        ? 'bg-emerald-100 text-emerald-700' 
+        : 'bg-red-100 text-red-700'
+    }`}>
+      {status}
+    </span>
+  );
+
   return (
     <div className="space-y-6">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-3xl font-bold text-gray-900">Certificate Management</h2>
-          <p className="text-gray-500 mt-1">View, add, edit, and manage student certificates.</p>
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Certificate Management</h2>
+          <p className="text-gray-500 mt-1 text-sm sm:text-base">View, add, edit, and manage student certificates.</p>
         </div>
         <button 
           onClick={openAddModal}
-          className="flex items-center px-4 py-2.5 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors shadow-sm font-medium"
+          className="flex items-center justify-center px-4 py-2.5 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors shadow-sm font-medium w-full sm:w-auto"
         >
           <Plus size={18} className="mr-2" />
           Add Certificate
@@ -156,8 +166,8 @@ const AdminCertificates = () => {
       </div>
 
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-        <div className="p-4 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
-          <div className="relative max-w-md w-full">
+        <div className="p-4 border-b border-gray-100 bg-gray-50/50">
+          <div className="relative w-full">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <Search size={18} className="text-gray-400" />
             </div>
@@ -171,7 +181,8 @@ const AdminCertificates = () => {
           </div>
         </div>
 
-        <div className="overflow-x-auto">
+        {/* Desktop table — hidden on small screens */}
+        <div className="overflow-x-auto hidden md:block">
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-gray-50 text-gray-500 text-xs uppercase tracking-wider">
@@ -200,15 +211,7 @@ const AdminCertificates = () => {
                   <td className="px-6 py-4 text-gray-600">{cert.rollNo}</td>
                   <td className="px-6 py-4 text-gray-600">{cert.batchNo}</td>
                   <td className="px-6 py-4 text-gray-600 font-bold">{cert.grade}</td>
-                  <td className="px-6 py-4">
-                    <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${
-                      cert.status === 'Verified' 
-                        ? 'bg-emerald-100 text-emerald-700' 
-                        : 'bg-red-100 text-red-700'
-                    }`}>
-                      {cert.status}
-                    </span>
-                  </td>
+                  <td className="px-6 py-4">{statusBadge(cert.status)}</td>
                   <td className="px-6 py-4 flex items-center justify-end space-x-3">
                     <button onClick={() => handleDownload(cert)} className="text-gray-400 hover:text-blue-600 transition-colors" title="Download QR/PDF">
                       <Download size={18} />
@@ -232,13 +235,59 @@ const AdminCertificates = () => {
             </tbody>
           </table>
         </div>
+
+        {/* Mobile card layout — visible only on small screens */}
+        <div className="md:hidden divide-y divide-gray-100">
+          {isLoading && certificates.length === 0 ? (
+            <div className="px-4 py-8 text-center text-gray-500">Loading certificates...</div>
+          ) : filteredCertificates.length === 0 ? (
+            <div className="px-4 py-8 text-center text-gray-500">No certificates found.</div>
+          ) : filteredCertificates.map((cert) => (
+            <div key={cert.certificateId} className="p-4 space-y-3">
+              <div className="flex items-start justify-between">
+                <div className="min-w-0 flex-1">
+                  <p className="font-semibold text-gray-900 truncate">{cert.name}</p>
+                  <p className="text-xs text-gray-400 mt-0.5 font-mono">{cert.certificateId.substring(0, 12)}...</p>
+                </div>
+                {statusBadge(cert.status)}
+              </div>
+
+              <div className="grid grid-cols-3 gap-3 text-sm">
+                <div>
+                  <p className="text-gray-400 text-xs uppercase tracking-wide">Roll No</p>
+                  <p className="text-gray-700 font-medium mt-0.5">{cert.rollNo}</p>
+                </div>
+                <div>
+                  <p className="text-gray-400 text-xs uppercase tracking-wide">Batch</p>
+                  <p className="text-gray-700 font-medium mt-0.5">{cert.batchNo}</p>
+                </div>
+                <div>
+                  <p className="text-gray-400 text-xs uppercase tracking-wide">Grade</p>
+                  <p className="text-gray-900 font-bold mt-0.5">{cert.grade}</p>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-end space-x-4 pt-2 border-t border-gray-50">
+                <button onClick={() => handleDownload(cert)} className="text-gray-400 hover:text-blue-600 transition-colors p-1.5" title="Download QR/PDF">
+                  <Download size={18} />
+                </button>
+                <button onClick={() => openEditModal(cert)} className="text-gray-400 hover:text-amber-600 transition-colors p-1.5" title="Edit">
+                  <Edit2 size={18} />
+                </button>
+                <button onClick={() => handleDelete(cert.certificateId)} className="text-gray-400 hover:text-red-600 transition-colors p-1.5" title="Delete">
+                  <Trash2 size={18} />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Add/Edit Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-2xl shadow-xl max-w-lg w-full overflow-hidden transform transition-all">
-            <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4 z-50">
+          <div className="bg-white rounded-t-2xl sm:rounded-2xl shadow-xl w-full sm:max-w-lg overflow-hidden transform transition-all max-h-[90vh] flex flex-col">
+            <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gray-50/50 shrink-0">
               <h3 className="text-lg font-bold text-gray-900">
                 {editingCert ? 'Edit Certificate' : 'Generate New Certificate'}
               </h3>
@@ -250,15 +299,15 @@ const AdminCertificates = () => {
               </button>
             </div>
             
-            <form onSubmit={handleSubmit} className="p-6 space-y-4 max-h-[70vh] overflow-y-auto">
+            <form onSubmit={handleSubmit} className="p-6 space-y-4 overflow-y-auto flex-1">
               {error && (
                 <div className="bg-red-50 text-red-600 p-3 rounded-lg text-sm border border-red-100">
                   {error}
                 </div>
               )}
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="md:col-span-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="sm:col-span-2">
                   <label className="block text-sm font-medium text-gray-700 mb-1">Student Name</label>
                   <input
                     type="text"
@@ -266,7 +315,7 @@ const AdminCertificates = () => {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    className="block w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                    className="block w-full px-3 py-2.5 sm:py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all text-base sm:text-sm"
                     placeholder="e.g. John Doe"
                   />
                 </div>
@@ -279,7 +328,7 @@ const AdminCertificates = () => {
                     name="rollNo"
                     value={formData.rollNo}
                     onChange={handleChange}
-                    className="block w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                    className="block w-full px-3 py-2.5 sm:py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all text-base sm:text-sm"
                     placeholder="e.g. CS2024-001"
                   />
                 </div>
@@ -292,7 +341,7 @@ const AdminCertificates = () => {
                     name="contactNo"
                     value={formData.contactNo}
                     onChange={handleChange}
-                    className="block w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                    className="block w-full px-3 py-2.5 sm:py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all text-base sm:text-sm"
                     placeholder="e.g. 9876543210"
                   />
                 </div>
@@ -305,7 +354,7 @@ const AdminCertificates = () => {
                     name="batchNo"
                     value={formData.batchNo}
                     onChange={handleChange}
-                    className="block w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                    className="block w-full px-3 py-2.5 sm:py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all text-base sm:text-sm"
                     placeholder="e.g. BATCH-A"
                   />
                 </div>
@@ -318,19 +367,19 @@ const AdminCertificates = () => {
                     name="grade"
                     value={formData.grade}
                     onChange={handleChange}
-                    className="block w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                    className="block w-full px-3 py-2.5 sm:py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all text-base sm:text-sm"
                     placeholder="e.g. A+"
                   />
                 </div>
                 
                 {editingCert && (
-                  <div className="md:col-span-2">
+                  <div className="sm:col-span-2">
                     <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
                     <select
                       name="status"
                       value={formData.status}
                       onChange={handleChange as any}
-                      className="block w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all bg-white"
+                      className="block w-full px-3 py-2.5 sm:py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all bg-white text-base sm:text-sm"
                     >
                       <option value="Verified">Verified</option>
                       <option value="Not Verified">Not Verified</option>
@@ -340,11 +389,11 @@ const AdminCertificates = () => {
                 )}
               </div>
 
-              <div className="pt-4 flex items-center justify-end space-x-3 border-t border-gray-100 mt-6">
+              <div className="pt-4 flex flex-col-reverse sm:flex-row items-center justify-end gap-3 sm:space-x-3 border-t border-gray-100 mt-6">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+                  className="w-full sm:w-auto px-4 py-2.5 sm:py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
                   disabled={isLoading}
                 >
                   Cancel
@@ -352,7 +401,7 @@ const AdminCertificates = () => {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors shadow-sm disabled:bg-blue-400"
+                  className="w-full sm:w-auto px-4 py-2.5 sm:py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors shadow-sm disabled:bg-blue-400"
                 >
                   {isLoading ? 'Processing...' : (editingCert ? 'Save Changes' : 'Generate Certificate')}
                 </button>
