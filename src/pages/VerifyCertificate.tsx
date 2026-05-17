@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { motion } from 'framer-motion';
-import { CheckCircle, XCircle, ShieldCheck, Download, Copy, Building2, Calendar, User, Award, Hash, Check, AlertCircle } from 'lucide-react';
+import { CheckCircle, XCircle, Download, Copy, Calendar, User, Award, Hash, Check, AlertCircle } from 'lucide-react';
 
 interface CertificateData {
   certificateId: string;
