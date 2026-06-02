@@ -2,7 +2,7 @@ import axios from 'axios';
 import type { AxiosError, AxiosResponse, AxiosRequestConfig } from 'axios';
 
 const API_BASE_URL = 'https://server-kg-z497.onrender.com/api';
-const LOCAL_API_BASE_URL = 'http://localhost:5000/api';
+// const LOCAL_API_BASE_URL = 'http://localhost:5000/api';
 // const API_BASE_URL = 'https://server-kg.onrender.com/api';
 
 // Create an axios instance with default config
